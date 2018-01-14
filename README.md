@@ -48,3 +48,8 @@ The app does almost everything my app will do, but in a more complicated way. Al
 ## Visual sketch:
 
 ![](doc/Image.png)
+
+
+## Better Code Hub
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/RickBakker01/ProgrammeerProject?branch=master)](https://bettercodehub.com/)

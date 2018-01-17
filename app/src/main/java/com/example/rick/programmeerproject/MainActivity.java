@@ -1,5 +1,8 @@
 package com.example.rick.programmeerproject;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_LOCATION = "location";
     int onsaved = 0;
     String locality = null;
+
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
@@ -47,6 +53,50 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
+    private ArrayList names = null;
+    private ArrayList adresses = null;
+
+    ArrayList coordinates;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adresses = intent.getStringArrayListExtra("adress");
+            names = intent.getStringArrayListExtra("name");
+//            getCoordinates();
+            for (int i = 0; i < adresses.size(); i++) {
+                getCoordinates(adresses.get(i).toString());
+            }
+            if (coordinates != null){
+
+
+            Log.d("coor", coordinates.toString());}
+
+            for (int i = 0; i < names.size(); i++) {
+                Log.d("name:", names.get(i).toString());
+            }
+        }
+    };
+
+    public void getCoordinates(String adress) {
+        Geocoder coder = new Geocoder(this);
+        try {
+            ArrayList<Address> coor = (ArrayList<Address>) coder.getFromLocationName(adress, 1);
+
+
+            for(Address co : coor){
+                if (coor == null) {//Controls to ensure it is right address such as country etc.
+                     Log.d("coord", String.valueOf(co.getLongitude()));
+                    //double latitude = co.getLatitude();
+                }
+            }
+           //Log.d("coor", coordinates.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Log.d("coor", coordinates.toString());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+
         LatLng sydney = new LatLng(-33.852, 151.211);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
@@ -277,5 +328,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void citySearch() {
         CityAsyncTask asyncTask = new CityAsyncTask(this);
         asyncTask.execute(locality);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
+                ("namen"));
     }
 }

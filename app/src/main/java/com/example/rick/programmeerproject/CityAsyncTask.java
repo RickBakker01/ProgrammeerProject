@@ -1,9 +1,11 @@
 package com.example.rick.programmeerproject;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,18 +18,12 @@ import java.util.List;
  * Created by Rick on 17-1-2018.
  * test comment git
  */
-class CityAsyncTask extends AsyncTask<String, Integer, String> {
+public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;
 
-    //
     CityAsyncTask(MainActivity locality) {
         this.context = locality.getApplicationContext();
     }
-
-    //    @Override
-    //    protected void onPreExecute() {
-    //        Toast.makeText(context, "testing", Toast.LENGTH_SHORT).show();
-    //    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -43,8 +39,8 @@ class CityAsyncTask extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         Log.d("resultaat", result);
-        List adresses = new ArrayList();
-        List names = new ArrayList();
+        ArrayList adresses = new ArrayList();
+        ArrayList names = new ArrayList();
         try {
             //Get the results
             JSONArray Main = new JSONArray(result);
@@ -57,7 +53,8 @@ class CityAsyncTask extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
         }
 
-        Log.d("street", adresses.toString());
-        Log.d("street", names.toString());
+        Intent intent = new Intent("namen").putExtra("adress", adresses);
+        intent.putExtra("name", names);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by Rick on 17-1-2018.
+ * test comment git
  */
 class CityAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;

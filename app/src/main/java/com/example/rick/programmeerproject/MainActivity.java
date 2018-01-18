@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void citySearch() {
         CityAsyncTask asyncTask = new CityAsyncTask(this);
-        asyncTask.execute(locality);
+        asyncTask.execute("amsterdam");
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
                 ("breweries"));
     }

@@ -32,4 +32,29 @@ class HttpRequestHelper {
         }
         return result;
     }
+
+
+    static synchronized String downloadFromServer2(String... params) throws MalformedURLException {
+        String result2 = "";
+        String id = params[0];
+        URL url = new URL("http://beermapping" + "" +
+                ".com/webservice/locmap/ebd4907cef61e7544b290b02c3b0d28b/" + id + "&s=json");
+        HttpURLConnection connect;
+        try {
+            connect = (HttpURLConnection) url.openConnection();
+            connect.setRequestMethod("GET");
+            Integer responseCode = connect.getResponseCode();
+            if (responseCode >= 200 && responseCode < 300) {
+                BufferedReader bReader = new BufferedReader(new InputStreamReader(connect
+                        .getInputStream()));
+                String line;
+                while ((line = bReader.readLine()) != null) {
+                    result2 += line;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result2;
+    }
 }

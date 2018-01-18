@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_LOCATION = "location";
     int onsaved = 0;
     String locality = null;
-
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
@@ -53,60 +52,45 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
-    private ArrayList names = null;
-    private ArrayList adresses = null;
-
-    ArrayList coordinates;
-
+    private ArrayList names;
+    private ArrayList lat;
+    private ArrayList lon;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            adresses = intent.getStringArrayListExtra("adress");
             names = intent.getStringArrayListExtra("name");
-//            getCoordinates();
-            for (int i = 0; i < adresses.size(); i++) {
-                getCoordinates(adresses.get(i).toString());
-            }
-            if (coordinates != null){
-
-
-            Log.d("coor", coordinates.toString());}
-
-            for (int i = 0; i < names.size(); i++) {
-                Log.d("name:", names.get(i).toString());
-            }
+            lon = intent.getStringArrayListExtra("lon");
+            lat = intent.getStringArrayListExtra("lat");
+            setMarker();
         }
     };
 
-    public void getCoordinates(String adress) {
-        Geocoder coder = new Geocoder(this);
-        try {
-            ArrayList<Address> coor = (ArrayList<Address>) coder.getFromLocationName(adress, 1);
+    public void setMarker() {
+        Context context = getApplicationContext();
 
-
-            for(Address co : coor){
-                if (coor == null) {//Controls to ensure it is right address such as country etc.
-                     Log.d("coord", String.valueOf(co.getLongitude()));
-                    //double latitude = co.getLatitude();
-                }
+        if (names.contains("No Location Found") && onsaved == 0) {
+            Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
+                    .show();
+        } else if (!names.contains("No Location Found") || onsaved != 1) {
+            for (int i = 0; i < names.size(); i++) {
+                mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
+                        .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
+                        (names.get(i).toString()));
             }
-           //Log.d("coor", coordinates.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        //Log.d("coor", coordinates.toString());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (savedInstanceState != null) {
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-            Log.d("camera", mCameraPosition.toString());
             onsaved = 1;
+            names = savedInstanceState.getStringArrayList("names");
+            lon = savedInstanceState.getStringArrayList("lon");
+            lat = savedInstanceState.getStringArrayList("lat");
         }
 
         // Retrieve the content view that renders the map.
@@ -134,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mMap != null) {
             outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
             outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+            outState.putStringArrayList("names", names);
+            outState.putStringArrayList("lon", lon);
+            outState.putStringArrayList("lat", lat);
             super.onSaveInstanceState(outState);
         }
     }
@@ -145,9 +132,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         // Use a custom info window adapter to handle multiple lines of text in the
@@ -186,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (onsaved == 1) {
             CameraUpdate update = CameraUpdateFactory.newCameraPosition(mCameraPosition);
             mMap.moveCamera(update);
+            setMarker();
         } else {
             // Get the current location of the device and set the position of the map.
             control();
@@ -290,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getDeviceLocation();
         } else {
             //GPS disabled
-            Toast.makeText(this, "Please turn on location services", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please turn on location services", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -320,15 +305,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         if (addresses != null && addresses.size() > 0) {
             locality = addresses.get(0).getLocality();
-            Log.d("city", locality.toString());
             citySearch();
         }
     }
 
     public void citySearch() {
         CityAsyncTask asyncTask = new CityAsyncTask(this);
-        asyncTask.execute(locality);
+        asyncTask.execute("amsterdam");
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
-                ("namen"));
+                ("breweries"));
     }
 }

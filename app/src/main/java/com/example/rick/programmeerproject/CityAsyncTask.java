@@ -21,6 +21,7 @@ import java.util.List;
 public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;
 
+    String resultaat;
     CityAsyncTask(MainActivity locality) {
         this.context = locality.getApplicationContext();
     }
@@ -38,23 +39,28 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+
         Log.d("resultaat", result);
-        ArrayList adresses = new ArrayList();
-        ArrayList names = new ArrayList();
+//        ArrayList adresses = new ArrayList();
+//        ArrayList names = new ArrayList();
         try {
             //Get the results
             JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
-                adresses.add(breweries.getString("street"));
-                names.add(breweries.getString("name"));
+//                adresses.add(breweries.getString("street"));
+//                names.add(breweries.getString("id"));
+                resultaat = breweries.getString("id");
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        CoordinatesAsyncTask asyncTask = new CoordinatesAsyncTask(this);
+        asyncTask.execute(resultaat);
+    }
 
-        Intent intent = new Intent("namen").putExtra("adress", adresses);
-        intent.putExtra("name", names);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    public Context getApplicationContext() {
+        return context;
     }
 }

@@ -12,13 +12,15 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 /**
  * Created by Rick on 18-1-2018.
  */
 public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
+//    ArrayList<String> ids = new ArrayList<>();
     private Context context;
 
-    ArrayList<String> ids = new ArrayList<>();
+//    String names;
 
     CoordinatesAsyncTask(CityAsyncTask resultaat) {
         this.context = resultaat.getApplicationContext();
@@ -27,9 +29,10 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            ids.add(Arrays.toString(params));
+            //Get the ID from the param. Arrays.toString() includes [ and ]. ReplaceAll with
+            // regex to get rid of the brackets.
+//            ids.add(Arrays.toString(params).replaceAll("\\[|]|,|\\s", ""));
             return HttpRequestHelper.downloadFromServer2(params);
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -39,28 +42,36 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result2) {
         super.onPostExecute(result2);
-
-        Log.d("resultaat2", result2);
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> lat = new ArrayList<>();
-        ArrayList<String> lon = new ArrayList<>();
-
+        String names;
+        String lat;
+        String lon;
+        String status;
+//        ArrayList<String> names = new ArrayList<>();
+//        ArrayList<String> lat = new ArrayList<>();
+//        ArrayList<String> lon = new ArrayList<>();
+//        ArrayList<String> status = new ArrayList<>();
         try {
             //Get the results
             JSONArray Main = new JSONArray(result2);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
-                names.add(breweries.getString("name"));
-                lat.add(breweries.getString("lat"));
-                lon.add(breweries.getString("lng"));
+                if (!Objects.equals(breweries.getString("name"), "null")) {
+                names = breweries.getString("name");
+                lat = breweries.getString("lat");
+                lon = breweries.getString("lng");
+                status = breweries.getString("status");
+                    Intent intent = new Intent("breweries").putExtra("names", names);
+                            intent.putExtra("lat", lat);
+                            intent.putExtra("lon", lon);
+                            intent.putExtra("status", status);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent("breweries").putExtra("name", names);
-        intent.putExtra("lat", lat);
-        intent.putExtra("lon", lon);
-        intent.putExtra("ids", ids);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+
     }
 }

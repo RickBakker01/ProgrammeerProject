@@ -45,12 +45,13 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
                 //                adresses.add(breweries.getString("street"));
                 //                names.add(breweries.getString("id"));
                 resultaat = breweries.getString("id");
+                CoordinatesAsyncTask asyncTask = new CoordinatesAsyncTask(this);
+                asyncTask.execute(resultaat);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CoordinatesAsyncTask asyncTask = new CoordinatesAsyncTask(this);
-        asyncTask.execute(resultaat);
+
     }
 
     public Context getApplicationContext() {

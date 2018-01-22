@@ -8,11 +8,25 @@
     tools:context="com.example.rick.programmeerproject.InfoActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
-        android:text="Some info about the selected brewery"/>
+        android:text=" set"/>
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text=" set"/>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text=" set"/>
 
     <Button
         android:id="@+id/button3"

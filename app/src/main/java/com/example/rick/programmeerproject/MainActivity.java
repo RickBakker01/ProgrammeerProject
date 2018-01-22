@@ -53,36 +53,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
-    private ArrayList names;
-    private ArrayList lat;
-    private ArrayList lon;
-    private ArrayList ids;
+    private ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> lat = new ArrayList<>();
+    private ArrayList<String> lon = new ArrayList<>();
+    private ArrayList<String> status = new ArrayList<>();
+     public String name = "fuck";
+
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            names = intent.getStringArrayListExtra("name");
-            lon = intent.getStringArrayListExtra("lon");
-            lat = intent.getStringArrayListExtra("lat");
-            ids = intent.getStringArrayListExtra("ids");
+
+            names.add(intent.getStringExtra("names"));
+            lon.add(intent.getStringExtra("lon"));
+            lat.add(intent.getStringExtra("lat"));
+            status.add(intent.getStringExtra("status"));
+
             setMarker();
+            Log.d("names", lat.toString());
+
         }
     };
 
     public void setMarker() {
         Context context = getApplicationContext();
-
         mMap.setOnInfoWindowClickListener(this);
         if (names.contains("No Location Found") && onsaved == 0) {
             Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
                     .show();
         } else if (!names.contains("No Location Found") || onsaved != 1) {
             for (int i = 0; i < names.size(); i++) {
+
                 mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
                         .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                        (names.get(i).toString())).setTag(ids.get(i));
+                        (names.get(i)));
             }
         }
     }
@@ -99,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             lat = savedInstanceState.getStringArrayList("lat");
         }
 
+        Log.d("namessssss", name);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_main);
 
@@ -323,7 +330,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Log.d("testString", marker.getTag().toString());
-        startActivity(new Intent(this, InfoActivity.class).putExtra("id",marker.getTag().toString()));
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra("name", marker.getTitle());
+        intent.putExtra("lon", String.valueOf(marker.getPosition().longitude));
+        intent.putExtra("lat", String.valueOf(marker.getPosition().latitude));
+        intent.putExtra("status", String.valueOf(marker.getTag()));
+        startActivity(intent);
     }
 }

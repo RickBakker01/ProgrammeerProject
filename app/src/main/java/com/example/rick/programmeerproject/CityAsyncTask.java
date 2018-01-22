@@ -1,10 +1,6 @@
 package com.example.rick.programmeerproject;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,16 +8,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 /**
  * Created by Rick on 17-1-2018.
  * test comment git
  */
 public class CityAsyncTask extends AsyncTask<String, Integer, String> {
+    private String resultaat;
     private Context context;
 
-    String resultaat;
     CityAsyncTask(MainActivity locality) {
         this.context = locality.getApplicationContext();
     }
@@ -41,17 +35,16 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
 
         Log.d("resultaat", result);
-//        ArrayList adresses = new ArrayList();
-//        ArrayList names = new ArrayList();
+        //        ArrayList adresses = new ArrayList();
+        //        ArrayList names = new ArrayList();
         try {
             //Get the results
             JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
-//                adresses.add(breweries.getString("street"));
-//                names.add(breweries.getString("id"));
+                //                adresses.add(breweries.getString("street"));
+                //                names.add(breweries.getString("id"));
                 resultaat = breweries.getString("id");
-
             }
         } catch (JSONException e) {
             e.printStackTrace();

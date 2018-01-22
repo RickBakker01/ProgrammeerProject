@@ -28,6 +28,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     private static final int DEFAULT_ZOOM = 14;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     // Keys for storing activity state.
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList names;
     private ArrayList lat;
     private ArrayList lon;
+    private ArrayList ids;
+
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             names = intent.getStringArrayListExtra("name");
             lon = intent.getStringArrayListExtra("lon");
             lat = intent.getStringArrayListExtra("lat");
+            ids = intent.getStringArrayListExtra("ids");
             setMarker();
         }
     };
@@ -69,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void setMarker() {
         Context context = getApplicationContext();
 
+        mMap.setOnInfoWindowClickListener(this);
         if (names.contains("No Location Found") && onsaved == 0) {
             Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
                     .show();
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             for (int i = 0; i < names.size(); i++) {
                 mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
                         .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                        (names.get(i).toString()));
+                        (names.get(i).toString())).setTag(ids.get(i));
             }
         }
     }
@@ -195,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
-
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng
                                     (mLastKnownLocation.getLatitude(), mLastKnownLocation
                                             .getLongitude()), DEFAULT_ZOOM));
@@ -314,5 +319,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         asyncTask.execute(locality);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
                 ("breweries"));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Log.d("testString", marker.getTag().toString());
+        startActivity(new Intent(this, InfoActivity.class).putExtra("id",marker.getTag().toString()));
     }
 }

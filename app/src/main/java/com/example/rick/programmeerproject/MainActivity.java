@@ -37,12 +37,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap
+        .OnInfoWindowClickListener {
     private static final int DEFAULT_ZOOM = 14;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+    public String name = "";
     int onsaved = 0;
     String locality = null;
     private CameraPosition mCameraPosition;
@@ -56,11 +58,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<String> names = new ArrayList<>();
     private ArrayList<String> lat = new ArrayList<>();
     private ArrayList<String> lon = new ArrayList<>();
-    private ArrayList<String> status = new ArrayList<>();
-     public String name = "fuck";
-
-
-
+//    private ArrayList<String> status = new ArrayList<>();
+    private ArrayList<String> id = new ArrayList<>();
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -69,11 +68,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             names.add(intent.getStringExtra("names"));
             lon.add(intent.getStringExtra("lon"));
             lat.add(intent.getStringExtra("lat"));
-            status.add(intent.getStringExtra("status"));
-
+            id.add(intent.getStringExtra("id"));
             setMarker();
-            Log.d("names", lat.toString());
-
         }
     };
 
@@ -88,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
                         .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                        (names.get(i)));
+                        (names.get(i))).setTag(id.get(i));
             }
         }
     }
@@ -146,33 +142,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap map) {
         mMap = map;
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        // Use a custom info window adapter to handle multiple lines of text in the
-        // info window contents.
-        //        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-        //
-        //            @Override
-        //            // Return null here, so that getInfoContents() is called next.
-        //            public View getInfoWindow(Marker arg0) {
-        //                return null;
-        //            }
-        //
-        //            @Override
-        //            public View getInfoContents(Marker marker) {
-        //                // Inflate the layouts for the info window, title and snippet.
-        //                View infoWindow = getLayoutInflater().inflate(R.layout
-        // .custom_info_contents,
-        //                        (FrameLayout) findViewById(R.id.map), false);
-        //
-        //                TextView title = ((TextView) infoWindow.findViewById(R.id.title));
-        //                title.setText(marker.getTitle());
-        //
-        //                TextView snippet = ((TextView) infoWindow.findViewById(R.id.snippet));
-        //                snippet.setText(marker.getSnippet());
-        //
-        //                return infoWindow;
-        //            }
-        //        });
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -323,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void citySearch() {
         CityAsyncTask asyncTask = new CityAsyncTask(this);
-        asyncTask.execute(locality);
+        asyncTask.execute("amsterdam");
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
                 ("breweries"));
     }
@@ -332,9 +301,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("name", marker.getTitle());
-        intent.putExtra("lon", String.valueOf(marker.getPosition().longitude));
-        intent.putExtra("lat", String.valueOf(marker.getPosition().latitude));
-        intent.putExtra("status", String.valueOf(marker.getTag()));
+        intent.putExtra("id", String.valueOf(marker.getTag()));
         startActivity(intent);
     }
 }

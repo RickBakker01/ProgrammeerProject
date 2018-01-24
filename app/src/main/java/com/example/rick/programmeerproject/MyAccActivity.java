@@ -14,6 +14,12 @@ public class MyAccActivity extends AppCompatActivity {
         findViewById(R.id.button7).setOnClickListener(new myListener());
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
     public class myListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {

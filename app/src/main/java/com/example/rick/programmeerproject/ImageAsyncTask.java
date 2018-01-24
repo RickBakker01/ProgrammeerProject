@@ -29,7 +29,7 @@ public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return null;
+            return null;
     }
 
     @Override

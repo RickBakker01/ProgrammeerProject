@@ -26,7 +26,7 @@ public class InfoActivity extends AppCompatActivity {
     TextView street;
     TextView city;
     TextView phone;
-    TextView url;
+
     String sId;
     String sCaption;
     String sName;
@@ -35,6 +35,7 @@ public class InfoActivity extends AppCompatActivity {
     String sCity;
     String sPhone;
     String sImageUrl;
+
     ImageView imageView;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 

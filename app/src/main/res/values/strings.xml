@@ -4,4 +4,21 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="please_login">Please log in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="or">Or</string>
+    <string name="register">Register</string>
+    <string name="sign_in_failed">Failed to sign in, please try again</string>
+    <string name="sign_in_successful">Successfully signed in</string>
+    <string name="empty">Please fill in your email and password</string>
+    <string name="emailRegister">Email</string>
+    <string name="passwordRegister">Password</string>
+    <string name="confirm_passwordRegister">Confirm password</string>
+    <string name="registerRegister">Register</string>
+    <string name="registerHeader">Please fill in below and click on register to register your account</string>
+    <string name="registration_successful">Registration successful. Account created</string>
+    <string name="to_short">Your password must be longer than 6 characters</string>
+    <string name="different_passwords">You have entered two different passwords. Try again</string>
 </resources>

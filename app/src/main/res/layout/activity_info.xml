@@ -79,11 +79,17 @@
         android:layout_height="wrap_content"
         android:text="Visited"/>
 
-    <TextView
-        android:id="@+id/textView2"
+    <EditText
+        android:id="@+id/brewComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My comment about the brewery"/>
+        android:hint="My comment about the brewery"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="save"/>
 
 
 </LinearLayout>

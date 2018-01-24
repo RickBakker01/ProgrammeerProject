@@ -9,16 +9,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Objects;
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public Context context;
+    Button save;
     TextView picture;
     TextView caption;
     TextView name;
@@ -26,7 +38,6 @@ public class InfoActivity extends AppCompatActivity {
     TextView street;
     TextView city;
     TextView phone;
-
     String sId;
     String sCaption;
     String sName;
@@ -35,8 +46,20 @@ public class InfoActivity extends AppCompatActivity {
     String sCity;
     String sPhone;
     String sImageUrl;
-
+    String comment;
+    RatingBar ratingBar;
+    Integer visits;
+    float numStars;
+    CheckBox checkBox;
+    EditText brewComment;
     ImageView imageView;
+    Integer uRating;
+    Integer uVisit;
+    String uComment;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String uid = user.getUid();
+    private DatabaseReference ref = database.getReference(uid);
+    //    private DatabaseReference ref2 = ref.child(sName);
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -80,11 +103,24 @@ public class InfoActivity extends AppCompatActivity {
         phone = findViewById(R.id.phone);
         imageView = findViewById(R.id.imageView);
 
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener(this);
+
+        save = findViewById(R.id.save);
+        save.setOnClickListener(new InfoActivity.myListener());
+
+        checkBox = findViewById(R.id.checkBox);
+
+        brewComment = findViewById(R.id.brewComment);
+
         Intent intent = getIntent();
         sName = intent.getStringExtra("name");
         sId = intent.getStringExtra("id");
         getInfo();
         getImage();
+        if (user != null) {
+                        collect();
+        }
     }
 
     @Override
@@ -120,6 +156,77 @@ public class InfoActivity extends AppCompatActivity {
     public void setImage() {
         Picasso.with(this).load(sImageUrl).resize(750, 750).into(imageView);
         caption.setText(sCaption);
+    }
+
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
+        numStars = ratingBar.getRating();
+        if (numStars > 0) {
+            checkBox.setChecked(true);
+        }
+    }
+
+    public void ratingToDB() {
+        User user = new User((int) numStars, visits, comment);
+        Log.d("visit", String.valueOf(visits));
+        ref.child(sName).setValue(user);
+    }
+
+    //    public void setVisited() {
+    //        if (numStars != 0.0 || !Objects.equals(comment, "")) {
+    //            checkBox.setChecked(true);
+    //        }
+    //    }
+
+    public void collect() {
+        // Attach a listener to read the data
+        ValueEventListener postListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                DataSnapshot users = dataSnapshot.child(sName);
+                User user = users.getValue(User.class);
+                if (dataSnapshot.hasChild(sName)) {
+                    assert user != null;
+                    uRating = user.getRating();
+
+                    uVisit = user.getVisit();
+
+                    uComment = user.getComment();
+
+                    ratingBar.setRating(uRating);
+                    if (uVisit == 1) {
+                        checkBox.setChecked(true);
+                    }
+                    if (!Objects.equals(uComment, "")) {
+                        brewComment.setText(uComment);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        };
+        ref.addValueEventListener(postListener);
+    }
+
+    private class myListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.save:
+                    comment = brewComment.getText().toString();
+                    if (checkBox.isChecked()) {
+                        visits = 1;
+                    } else {
+                        visits = 0;
+                    }
+                    ratingToDB();
+                    break;
+            }
+        }
     }
 }
 

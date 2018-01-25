@@ -227,6 +227,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */

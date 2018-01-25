@@ -56,10 +56,10 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     Integer uRating;
     Integer uVisit;
     String uComment;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String uid = user.getUid();
-    private DatabaseReference ref = database.getReference(uid);
-    //    private DatabaseReference ref2 = ref.child(sName);
+    String uid;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth mAuth;
+    DatabaseReference ref;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -113,13 +113,23 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
 
         brewComment = findViewById(R.id.brewComment);
 
+
         Intent intent = getIntent();
         sName = intent.getStringExtra("name");
         sId = intent.getStringExtra("id");
         getInfo();
         getImage();
+        mAuth = FirebaseAuth.getInstance();
+
         if (user != null) {
-                        collect();
+            uid = user.getUid();
+            user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("userlogin", user.toString());
+            ref = database.getReference(uid);
+            save.setVisibility(View.VISIBLE);
+            collect();
+        } else {
+            save.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -166,16 +176,10 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     }
 
     public void ratingToDB() {
-        User user = new User((int) numStars, visits, comment);
+        User user = new User(sId, (int) numStars, visits, comment);
         Log.d("visit", String.valueOf(visits));
         ref.child(sName).setValue(user);
     }
-
-    //    public void setVisited() {
-    //        if (numStars != 0.0 || !Objects.equals(comment, "")) {
-    //            checkBox.setChecked(true);
-    //        }
-    //    }
 
     public void collect() {
         // Attach a listener to read the data
@@ -188,6 +192,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
                 User user = users.getValue(User.class);
                 if (dataSnapshot.hasChild(sName)) {
                     assert user != null;
+                    sId = user.getID();
                     uRating = user.getRating();
 
                     uVisit = user.getVisit();

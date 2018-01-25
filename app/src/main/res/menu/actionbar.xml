@@ -3,9 +3,16 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_favorite"
         android:icon="@drawable/ic_account_box_black_24dp"
         android:title="Account"
         app:showAsAction="always"/>
+
 
 </menu>

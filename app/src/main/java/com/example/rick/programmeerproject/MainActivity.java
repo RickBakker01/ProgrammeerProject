@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap
         .OnInfoWindowClickListener {
     private static final int DEFAULT_ZOOM = 14;
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_LOCATION = "location";
     public String name = "";
     int onsaved = 0;
-    String locality = null;
+    String locality = "amsterdam";
+    Integer locFound = 0;
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
@@ -55,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location mLastKnownLocation;
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> lat = new ArrayList<>();
-    private ArrayList<String> lon = new ArrayList<>();
-//    private ArrayList<String> status = new ArrayList<>();
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> lat = new ArrayList<>();
+    ArrayList<String> lon = new ArrayList<>();
+    //    private ArrayList<String> status = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
@@ -69,19 +71,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             lon.add(intent.getStringExtra("lon"));
             lat.add(intent.getStringExtra("lat"));
             id.add(intent.getStringExtra("id"));
+            if (names.contains("No Location Found")) {
+                locFound += 1;
+            }
+            if (locFound == 1) {
+                Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
+                        .show();
+            }
+            Log.d("locfound", locFound.toString());
             setMarker();
         }
     };
 
     public void setMarker() {
+        Log.d("localtu", String.valueOf(names));
         Context context = getApplicationContext();
         mMap.setOnInfoWindowClickListener(this);
         if (names.contains("No Location Found") && onsaved == 0) {
-            Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
-                    .show();
-        } else if (!names.contains("No Location Found") || onsaved != 1) {
+            Log.d("namesl", "yes");
+        } else if (!names.contains("No Location Found")) {
             for (int i = 0; i < names.size(); i++) {
-
+                Log.d("namesssss", id.get(i));
                 mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
                         .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
                         (names.get(i))).setTag(id.get(i));
@@ -99,9 +109,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             names = savedInstanceState.getStringArrayList("names");
             lon = savedInstanceState.getStringArrayList("lon");
             lat = savedInstanceState.getStringArrayList("lat");
+            id = savedInstanceState.getStringArrayList("id");
         }
 
-        Log.d("namessssss", name);
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_main);
 
@@ -130,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             outState.putStringArrayList("names", names);
             outState.putStringArrayList("lon", lon);
             outState.putStringArrayList("lat", lat);
+            outState.putStringArrayList("id", id);
             super.onSaveInstanceState(outState);
         }
     }
@@ -180,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng
                                     (mLastKnownLocation.getLatitude(), mLastKnownLocation
                                             .getLongitude()), DEFAULT_ZOOM));
+
                             getCity();
                         }
                     }
@@ -232,7 +244,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         finish();
     }
 
-
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
@@ -274,7 +285,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(MainActivity.this, LogInActivity.class));
+        if (Objects.equals(String.valueOf(item), "Account")) {
+            startActivity(new Intent(MainActivity.this, LogInActivity.class));
+        } else if (Objects.equals(String.valueOf(item), "Search")) {
+            startActivity(new Intent(MainActivity.this, SearchActivity.class));
+        }
         return true;
     }
 
@@ -297,10 +312,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void citySearch() {
-        CityAsyncTask asyncTask = new CityAsyncTask(this);
-        asyncTask.execute("amsterdam");
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
-                ("breweries"));
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            locality = bundle.getString("city");
+        }
+            Log.d("localtu", locality);
+            CityAsyncTask asyncTask = new CityAsyncTask(this);
+            asyncTask.execute(locality);
+            LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("breweries"));
+
     }
 
     @Override

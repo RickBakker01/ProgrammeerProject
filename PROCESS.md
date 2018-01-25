@@ -20,10 +20,10 @@ The map works now. All markers show up.
 
 # Day 6
 Started with InfoActivity. Rough idea is now complete. I said in my README that I would use a SQLite database, but I won't. Firebase is better becuase I can save info online.
-Decided to go with Firebase instead.
+Decided to go with Firebase instead. (after looking in my README, I noticed I didn't day anything about SQLite. Oops.)
 
 # Day 7
-Made my log in page and my registration page. The work now. Finished the InfoActivity.
+Made my log in page and my registration page. The work now. Finished the InfoActivity. Used Picasso to load an image. Added it to README.
 
 # Day 8
 Last day of implementing the main functionality. The app can search for breweries now and there is a personal page with info about you and your visited breweries.

@@ -32,6 +32,7 @@ What are the apps main features?
 
 ### External components:
 - Firebase
+- Picasso
 
 ### Similar apps:
 - Untappd, free from the Google Play Store. 

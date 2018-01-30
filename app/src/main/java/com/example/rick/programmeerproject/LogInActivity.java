@@ -42,7 +42,6 @@ public class LogInActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
         bundle = intent.getExtras();
-        Log.d("bundddlee", String.valueOf(bundle));
     }
 
 

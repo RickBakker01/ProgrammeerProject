@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 0; i < names.size(); i++) {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
                             .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                            (names.get(i))).setTag(id.get(i));
+                            (names.get(i) + "   >")).setTag(id.get(i));
                 }
             }
         }

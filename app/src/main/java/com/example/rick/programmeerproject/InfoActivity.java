@@ -146,10 +146,8 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
             if (user == null) {
                 Intent intent = new Intent(InfoActivity.this, LogInActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("fromInfo", 1);
                 bundle.putString("name", sName);
                 bundle.putString("uId", sId);
-                Log.d("bundddlee", String.valueOf(bundle));
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else {

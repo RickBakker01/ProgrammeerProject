@@ -40,7 +40,7 @@
         </activity>
         <activity android:name=".SearchActivity"
                   android:noHistory="true"
-                  android:windowSoftInputMode="stateVisible">
+                  >
         </activity>
         <activity android:name=".MainActivity">
         </activity>

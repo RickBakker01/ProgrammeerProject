@@ -26,15 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LogInActivity">
+        <activity android:name=".LogInActivity"
+                  android:noHistory="true">
         </activity>
-        <activity android:name=".InfoActivity">
+        <activity android:name=".InfoActivity"
+                  android:noHistory="true">
         </activity>
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".RegisterActivity"
+                  android:noHistory="true">
         </activity>
-        <activity android:name=".MyAccActivity">
+        <activity android:name=".MyAccActivity"
+                  android:noHistory="true">
         </activity>
-        <activity android:name=".SearchActivity">
+        <activity android:name=".SearchActivity"
+                  android:noHistory="true">
         </activity>
         <activity android:name=".MainActivity">
         </activity>

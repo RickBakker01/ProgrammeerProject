@@ -37,14 +37,8 @@ public class LogInActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.user_password);
 
         mAuth = FirebaseAuth.getInstance();
-        checkUser();
     }
 
-    public void checkUser() {
-        if (user != null) {
-            startActivity(new Intent(this, MyAccActivity.class));
-        }
-    }
 
     public void signIn(String email, final String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new
@@ -69,12 +63,6 @@ public class LogInActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 
     public void register() {

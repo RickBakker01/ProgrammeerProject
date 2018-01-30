@@ -1,5 +1,4 @@
 package com.example.rick.programmeerproject;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ public class MyAccActivity extends AppCompatActivity {
     ArrayList<String> brewList = new ArrayList<>();
     ListView lv;
     String selectedBrewery;
-    Integer uID;
+    String uID;
     ArrayAdapter<String> arrayAdapter;
 
     @Override
@@ -45,7 +44,7 @@ public class MyAccActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(MyAccActivity.this, MainActivity.class));
     }
 
     public void collect() {
@@ -76,7 +75,12 @@ public class MyAccActivity extends AppCompatActivity {
                 DataSnapshot users = snapshot.child(selectedBrewery);
                 User user = users.getValue(User.class);
                 if (user != null) {
-                    uID = Integer.valueOf(user.getID());
+                    uID = user.getID();
+                    Intent intent = new Intent(MyAccActivity.this, InfoActivity.class);
+                    intent.putExtra("name", selectedBrewery);
+                    intent.putExtra("id", uID);
+                    startActivity(intent);
+                    finish();
                 }
             }
 
@@ -85,13 +89,11 @@ public class MyAccActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         };
-        ref.addValueEventListener(postListener);
+        ref.addListenerForSingleValueEvent(postListener);
     }
 
-
     public void populate() {
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout
-                .simple_list_item_1, brewList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, brewList);
         Log.d("listview", String.valueOf(brewList));
         lv.setAdapter(arrayAdapter);
     }
@@ -99,12 +101,9 @@ public class MyAccActivity extends AppCompatActivity {
     private class LVListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            selectedBrewery=brewList.get(i);
+            selectedBrewery = brewList.get(i);
             collectID();
-            Intent intent = new Intent(view.getContext(), InfoActivity.class);
-            intent.putExtra("name", selectedBrewery);
-            intent.putExtra("id", uID);
-            startActivity(intent);
+
         }
     }
 
@@ -115,22 +114,19 @@ public class MyAccActivity extends AppCompatActivity {
             builder.setMessage("Are you sure you want to remove this brewery?");
             builder.setCancelable(true);
 
-            builder.setPositiveButton(
-                    "Remove item",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            ref.child(brewList.get(i)).removeValue();
-                            brewList.clear();
-                            arrayAdapter.notifyDataSetChanged();
-                            Log.d("Arrayyyss", brewList.toString());
-                        }
-                    });
+            builder.setPositiveButton("Remove item", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    ref.child(brewList.get(i)).removeValue();
+                    brewList.clear();
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            });
             AlertDialog alert1 = builder.create();
             alert1.show();
             return true;
         }
     }
-
 
     public class myListener implements View.OnClickListener {
         @Override

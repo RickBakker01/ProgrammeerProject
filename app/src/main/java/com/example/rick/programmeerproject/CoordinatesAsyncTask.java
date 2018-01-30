@@ -51,7 +51,6 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
                     names = breweries.getString("name");
                     lat = breweries.getString("lat");
                     lon = breweries.getString("lng");
-                    //                    status = breweries.getString("status");
                     //Use an intent with a broadcast manager to send the data back to MainActivity
                     Intent intent = new Intent("breweries");
                     intent.putExtra("names", names);

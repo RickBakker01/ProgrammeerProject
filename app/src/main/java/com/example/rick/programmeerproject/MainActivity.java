@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,19 +51,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     int onsaved = 0;
     String locality = "amsterdam";
     Integer locFound = 0;
-    private CameraPosition mCameraPosition;
-    private GoogleMap mMap;
-    // The entry point to the Fused Location Provider.
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private boolean mLocationPermissionGranted;
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     Location mLastKnownLocation;
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> lat = new ArrayList<>();
     ArrayList<String> lon = new ArrayList<>();
+    private CameraPosition mCameraPosition;
+    private GoogleMap mMap;
+    // The entry point to the Fused Location Provider.
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private boolean mLocationPermissionGranted;
     //    private ArrayList<String> status = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -238,11 +241,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
@@ -285,7 +283,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (Objects.equals(String.valueOf(item), "Account")) {
-            startActivity(new Intent(MainActivity.this, LogInActivity.class));
+            if (user == null) {
+                startActivity(new Intent(MainActivity.this, LogInActivity.class));
+            } else {
+                startActivity(new Intent(this, MyAccActivity.class));
+            }
         } else if (Objects.equals(String.valueOf(item), "Search")) {
             startActivity(new Intent(MainActivity.this, SearchActivity.class));
         }
@@ -317,11 +319,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (bundle != null) {
             locality = bundle.getString("city");
         }
-            Log.d("localtu", locality);
-            CityAsyncTask asyncTask = new CityAsyncTask(this);
-            asyncTask.execute(locality);
-            LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("breweries"));
-
+        Log.d("localtu", locality);
+        CityAsyncTask asyncTask = new CityAsyncTask(this);
+        asyncTask.execute(locality);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
+                ("breweries"));
     }
 
     @Override

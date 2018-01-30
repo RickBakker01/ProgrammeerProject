@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean mLocationPermissionGranted;
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private Location mLastKnownLocation;
+    Location mLastKnownLocation;
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> lat = new ArrayList<>();
     ArrayList<String> lon = new ArrayList<>();
@@ -185,13 +185,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && task.getResult() != null) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng
                                     (mLastKnownLocation.getLatitude(), mLastKnownLocation
                                             .getLongitude()), DEFAULT_ZOOM));
-
                             getCity();
                         }
                     }

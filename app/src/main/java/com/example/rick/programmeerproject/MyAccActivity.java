@@ -29,6 +29,7 @@ public class MyAccActivity extends AppCompatActivity {
     ListView lv;
     String selectedBrewery;
     Integer uID;
+    ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +75,9 @@ public class MyAccActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 DataSnapshot users = snapshot.child(selectedBrewery);
                 User user = users.getValue(User.class);
-                uID = Integer.valueOf(user.getID());
-                Log.d("IDDDD", String.valueOf(uID));
+                if (user != null) {
+                    uID = Integer.valueOf(user.getID());
+                }
             }
 
             @Override
@@ -88,7 +90,7 @@ public class MyAccActivity extends AppCompatActivity {
 
 
     public void populate() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout
                 .simple_list_item_1, brewList);
         Log.d("listview", String.valueOf(brewList));
         lv.setAdapter(arrayAdapter);
@@ -119,6 +121,8 @@ public class MyAccActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             ref.child(brewList.get(i)).removeValue();
                             brewList.clear();
+                            arrayAdapter.notifyDataSetChanged();
+                            Log.d("Arrayyyss", brewList.toString());
                         }
                     });
             AlertDialog alert1 = builder.create();

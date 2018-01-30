@@ -99,14 +99,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d("localtu", String.valueOf(names));
         Context context = getApplicationContext();
         mMap.setOnInfoWindowClickListener(this);
-        if (names.contains("No Location Found") && onsaved == 0) {
-            Log.d("namesl", "yes");
-        } else if (!names.contains("No Location Found")) {
-            for (int i = 0; i < names.size(); i++) {
-                Log.d("namesssss", id.get(i));
-                mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
-                        .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                        (names.get(i))).setTag(id.get(i));
+        if (!names.contains("No Location Found") || onsaved != 0) {
+            if (!names.contains("No Location Found")) {
+                for (int i = 0; i < names.size(); i++) {
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
+                            .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
+                            (names.get(i))).setTag(id.get(i));
+                }
             }
         }
     }

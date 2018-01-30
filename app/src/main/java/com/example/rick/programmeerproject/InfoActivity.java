@@ -144,7 +144,14 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     public boolean onOptionsItemSelected(MenuItem item) {
         if (Objects.equals(String.valueOf(item), "Account")) {
             if (user == null) {
-                startActivity(new Intent(InfoActivity.this, LogInActivity.class));
+                Intent intent = new Intent(InfoActivity.this, LogInActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("fromInfo", 1);
+                bundle.putString("name", sName);
+                bundle.putString("uId", sId);
+                Log.d("bundddlee", String.valueOf(bundle));
+                intent.putExtras(bundle);
+                startActivity(intent);
             } else {
                 startActivity(new Intent(this, MyAccActivity.class));
             }

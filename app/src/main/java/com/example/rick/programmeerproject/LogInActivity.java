@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,9 @@ public class LogInActivity extends AppCompatActivity {
     EditText mPassword;
     //Standard Firebase code.
     private FirebaseAuth mAuth;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    Bundle bundle;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class LogInActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.user_password);
 
         mAuth = FirebaseAuth.getInstance();
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
+        Log.d("bundddlee", String.valueOf(bundle));
     }
 
 
@@ -46,6 +52,7 @@ public class LogInActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
                 //If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
                 // signed in user can be handled in the listener.
@@ -59,7 +66,14 @@ public class LogInActivity extends AppCompatActivity {
                             .LENGTH_SHORT).show();
 
                     finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    if (bundle == null) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        Intent intent2 = new Intent(getApplicationContext(), InfoActivity.class);
+                        intent2.putExtra("id", bundle.getString("uId"));
+                        intent2.putExtra("name", bundle.getString("name"));
+                        startActivity(intent2);
+                    }
                 }
             }
         });

@@ -28,6 +28,7 @@ public class SearchActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("city",city);
+                    bundle.putInt("fromSearch", 0);
                     intent.putExtras(bundle);
                     startActivity(intent);
             }

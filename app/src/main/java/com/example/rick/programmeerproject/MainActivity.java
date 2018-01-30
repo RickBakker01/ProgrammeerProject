@@ -51,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     int onsaved = 0;
     String locality = "amsterdam";
     Integer locFound = 0;
+    Integer fromSearch = 1;
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     Location mLastKnownLocation;
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> lat = new ArrayList<>();
     ArrayList<String> lon = new ArrayList<>();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private boolean mLocationPermissionGranted;
     //    private ArrayList<String> status = new ArrayList<>();
     private ArrayList<String> id = new ArrayList<>();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -81,7 +82,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
                         .show();
             }
-            Log.d("locfound", locFound.toString());
+            Log.d("fromSearch", String.valueOf(fromSearch));
+
+            if (fromSearch == 0 && !Objects.equals(lat.get(0), "null")) {
+                Log.d("LONNNN", lat.get(0));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf
+                        (String.valueOf(lat.get(0))), Double.valueOf(String.valueOf(lon.get(0))))
+                        , 12));
+            }
+            fromSearch += 1;
             setMarker();
         }
     };
@@ -319,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (bundle != null) {
             locality = bundle.getString("city");
+            fromSearch = bundle.getInt("fromSearch");
         }
         Log.d("localtu", locality);
         CityAsyncTask asyncTask = new CityAsyncTask(this);

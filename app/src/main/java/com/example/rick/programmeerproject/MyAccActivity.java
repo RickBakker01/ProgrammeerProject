@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 public class MyAccActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -39,6 +42,22 @@ public class MyAccActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new LVListener());
         lv.setOnItemLongClickListener(new LVLongListener());
         collect();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar, menu);
+        menu.findItem(R.id.action_search).setVisible(false);
+        menu.findItem(R.id.action_account).setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(MyAccActivity.this, MainActivity.class));
+        finish();
+        return true;
     }
 
     @Override
@@ -135,6 +154,7 @@ public class MyAccActivity extends AppCompatActivity {
                 case R.id.sign_out:
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(MyAccActivity.this, MainActivity.class));
+                    finish();
                     break;
             }
         }

@@ -136,12 +136,21 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
+        menu.findItem(R.id.action_sign_out).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(InfoActivity.this, MyAccActivity.class));
+        if (Objects.equals(String.valueOf(item), "Account")) {
+            if (user == null) {
+                startActivity(new Intent(InfoActivity.this, LogInActivity.class));
+            } else {
+                startActivity(new Intent(this, MyAccActivity.class));
+            }
+        } else if (Objects.equals(String.valueOf(item), "Search")) {
+            startActivity(new Intent(InfoActivity.this, SearchActivity.class));
+        }
         return true;
     }
 

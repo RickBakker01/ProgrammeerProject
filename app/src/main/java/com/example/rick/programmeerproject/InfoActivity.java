@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,11 +78,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         public void onReceive(Context context, Intent intent) {
             sImageUrl = intent.getStringExtra("imageurl");
             sCaption = intent.getStringExtra("caption");
-            if (!Objects.equals(sImageUrl, "null")) {
-                setImage();
-            } else {
-                picture.setText("Sorry, no picture found");
-            }
+            setImage();
         }
     };
 
@@ -178,8 +175,16 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     }
 
     public void setImage() {
-        Picasso.with(this).load(sImageUrl).resize(750, 750).into(imageView);
-        caption.setText(sCaption);
+        if (!Objects.equals(sImageUrl, "null")) {
+            Picasso.with(this).load(sImageUrl).resize(750, 750).into(imageView);
+            picture.setText("");
+        } else {
+            Picasso.with(this).load(R.drawable.no_image).resize(750, 750).into(imageView);
+            picture.setText("Image designed by Freepik.com");
+        }
+        if (!Objects.equals(sCaption, "null")) {
+            caption.setText(sCaption);
+        }
     }
 
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromTouch) {
@@ -190,9 +195,15 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     }
 
     public void ratingToDB() {
-        User user = new User(sId, (int) numStars, visits, comment);
-        Log.d("visit", String.valueOf(visits));
-        ref.child(sName).setValue(user);
+        if (visits == 0 && numStars == 0 && Objects.equals(comment, "")) {
+            Toast.makeText(this, "Please rate before you save", Toast.LENGTH_SHORT)
+                    .show();
+        } else {
+            User user = new User(sId, (int) numStars, visits, comment);
+            ref.child(sName).setValue(user);
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     public void collect() {

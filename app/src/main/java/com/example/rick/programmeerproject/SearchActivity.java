@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 public class SearchActivity extends AppCompatActivity {
     EditText searchText;
     Button search;
@@ -30,6 +31,8 @@ public class SearchActivity extends AppCompatActivity {
                     bundle.putString("city",city);
                     bundle.putInt("fromSearch", 0);
                     intent.putExtras(bundle);
+                    Toast.makeText(getApplicationContext(), "Searching", Toast.LENGTH_SHORT)
+                            .show();
                     startActivity(intent);
             }
         }

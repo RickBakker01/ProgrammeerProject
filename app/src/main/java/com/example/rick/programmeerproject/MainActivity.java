@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> lat = new ArrayList<>();
     ArrayList<String> lon = new ArrayList<>();
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private FirebaseAuth mAuth;
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.

@@ -59,8 +59,8 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     String uComment;
     String uid;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private FirebaseAuth mAuth;
     DatabaseReference ref;
+    private FirebaseAuth mAuth;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -88,7 +88,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         setContentView(R.layout.activity_info);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
                 ("info"));
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver2, new IntentFilter
                 ("image"));
         picture = findViewById(R.id.picture);
@@ -110,7 +109,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
 
         brewComment = findViewById(R.id.brewComment);
 
-
         Intent intent = getIntent();
         sName = intent.getStringExtra("name");
         sId = intent.getStringExtra("id");
@@ -121,7 +119,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         if (user != null) {
             uid = user.getUid();
             user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.d("userlogin", user.toString());
             ref = database.getReference(uid);
             save.setVisibility(View.VISIBLE);
             collect();
@@ -196,13 +193,11 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
 
     public void ratingToDB() {
         if (visits == 0 && numStars == 0 && Objects.equals(comment, "")) {
-            Toast.makeText(this, "Please rate before you save", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(this, "Please rate before you save", Toast.LENGTH_SHORT).show();
         } else {
             User user = new User(sId, (int) numStars, visits, comment);
             ref.child(sName).setValue(user);
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
         }
     }
 

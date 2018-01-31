@@ -1,7 +1,6 @@
 package com.example.rick.programmeerproject;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +12,6 @@ import java.net.MalformedURLException;
  * test comment git
  */
 public class CityAsyncTask extends AsyncTask<String, Integer, String> {
-    private String resultaat;
     private Context context;
 
     CityAsyncTask(MainActivity locality) {
@@ -33,28 +31,21 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
-        Log.d("resultaat", result);
-        //        ArrayList adresses = new ArrayList();
-        //        ArrayList names = new ArrayList();
         try {
             //Get the results
             JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
-                //                adresses.add(breweries.getString("street"));
-                //                names.add(breweries.getString("id"));
-                resultaat = breweries.getString("id");
+                String resultaat = breweries.getString("id");
                 CoordinatesAsyncTask asyncTask = new CoordinatesAsyncTask(this);
                 asyncTask.execute(resultaat);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
-    public Context getApplicationContext() {
+    Context getApplicationContext() {
         return context;
     }
 }

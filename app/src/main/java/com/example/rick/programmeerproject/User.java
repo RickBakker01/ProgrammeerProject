@@ -17,7 +17,8 @@ public class User {
         this.visit = visit;
         this.comment = comment;
     }
-    String getID(){
+
+    String getID() {
         return id;
     }
 

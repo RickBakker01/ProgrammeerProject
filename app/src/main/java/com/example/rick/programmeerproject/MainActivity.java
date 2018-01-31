@@ -3,14 +3,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -61,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> lat = new ArrayList<>();
     ArrayList<String> lon = new ArrayList<>();
-
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth mAuth;
     private CameraPosition mCameraPosition;
@@ -75,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             names.add(intent.getStringExtra("names"));
-            Log.d("namessss", names.toString());
             lon.add(intent.getStringExtra("lon"));
             lat.add(intent.getStringExtra("lat"));
             id.add(intent.getStringExtra("id"));
@@ -88,10 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
                         .show();
             }
-            Log.d("fromSearch", String.valueOf(fromSearch));
-
             if (fromSearch == 0 && !Objects.equals(lat.get(0), "null")) {
-                Log.d("LONNNN", lat.get(0));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf
                         (String.valueOf(lat.get(0))), Double.valueOf(String.valueOf(lon.get(0))))
                         , 12));
@@ -102,15 +94,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     };
 
     public void setMarker() {
-        Log.d("localtu", String.valueOf(names));
-        Context context = getApplicationContext();
         mMap.setOnInfoWindowClickListener(this);
         if (!names.contains("No Location Found") || onsaved != 0) {
             if (!names.contains("No Location Found")) {
                 for (int i = 0; i < names.size(); i++) {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(String
-                            .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i))))).title
-                            (names.get(i) + "   >")).setTag(id.get(i));
+                            .valueOf(lat.get(i))), Double.valueOf(String.valueOf(lon.get(i)))))
+                            .title(names.get(i) + "   >")).setTag(id.get(i));
                 }
             }
         }
@@ -170,10 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = map;
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-        mMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.style_json));
-
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -283,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void control() {
         LocationManager locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        assert locManager != null;
         if (locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             //GPS enabled
             getDeviceLocation();

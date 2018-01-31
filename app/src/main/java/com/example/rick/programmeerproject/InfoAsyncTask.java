@@ -15,13 +15,9 @@ import java.net.MalformedURLException;
  * Created by Rick on 23-1-2018.
  */
 public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
-    String status;
-    String street;
-    String city;
-    String phone;
     private Context context;
 
-    public InfoAsyncTask(InfoActivity info) {
+    InfoAsyncTask(InfoActivity info) {
         this.context = info.getApplicationContext();
     }
 
@@ -49,10 +45,10 @@ public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
             JSONArray Main = new JSONArray(result3);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
-                status = breweries.getString("status");
-                street = breweries.getString("street");
-                city = breweries.getString("city");
-                phone = breweries.getString("phone");
+                String status = breweries.getString("status");
+                String street = breweries.getString("street");
+                String city = breweries.getString("city");
+                String phone = breweries.getString("phone");
                 Intent intent = new Intent("info");
                 intent.putExtra("status", status);
                 intent.putExtra("street", street);

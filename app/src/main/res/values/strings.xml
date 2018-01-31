@@ -39,6 +39,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="freepik">Image designed by Freepik.com</string>
+    <string name="search">Search</string>
 
     <!-- activity_my_acc strings -->
     <string name="visited_breweries">Here are your visited breweries. Click to go to one and hold to remove.</string>
@@ -48,10 +49,14 @@
 
     <!-- activity_search strings -->
     <string name="city">City</string>
-    <string name="search">Search</string>
+
 
     <!-- activity_splash strings -->
     <string name="title">Van de kaart</string>
+
+    <!-- actionbar strings -->
+    <string name="account">Account</string>
+    <string name="sign_out">Sign out</string>
 
 
 </resources>

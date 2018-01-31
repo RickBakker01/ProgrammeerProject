@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 public class MyAccActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -60,8 +57,7 @@ public class MyAccActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FirebaseAuth.getInstance().signOut();
-        Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(MyAccActivity.this, MainActivity.class));
         finish();
         return true;
@@ -136,7 +132,6 @@ public class MyAccActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             selectedBrewery = brewList.get(i);
             collectID();
-
         }
     }
 

@@ -25,7 +25,7 @@
             android:maxHeight="100dp"
             android:scaleType="fitCenter"
             android:layout_marginTop="25dp"
-            app:srcCompat="@drawable/istanbul"/>
+            app:srcCompat="@drawable/logo"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_layout"

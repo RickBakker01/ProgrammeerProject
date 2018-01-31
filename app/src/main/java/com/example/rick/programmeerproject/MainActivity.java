@@ -3,12 +3,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_LOCATION = "location";
     public String name = "";
     int onsaved = 0;
-    String locality = "amsterdam";
+    String locality;
     Integer locFound = 0;
     Integer fromSearch = 1;
     // The geographical location where the device is currently located. That is, the last-known
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onReceive(Context context, Intent intent) {
 
             names.add(intent.getStringExtra("names"));
+            Log.d("namessss", names.toString());
             lon.add(intent.getStringExtra("lon"));
             lat.add(intent.getStringExtra("lat"));
             id.add(intent.getStringExtra("id"));
@@ -122,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             lat = savedInstanceState.getStringArrayList("lat");
             id = savedInstanceState.getStringArrayList("id");
         }
-
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_main);
 
@@ -329,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             locality = bundle.getString("city");
             fromSearch = bundle.getInt("fromSearch");
         }
-        Log.d("localtu", locality);
         CityAsyncTask asyncTask = new CityAsyncTask(this);
         asyncTask.execute(locality);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent intent = new Intent(this, InfoActivity.class);
-        intent.putExtra("name", marker.getTitle());
+        intent.putExtra("name", marker.getTitle().substring(0, marker.getTitle().length() - 1));
         intent.putExtra("id", String.valueOf(marker.getTag()));
         startActivity(intent);
     }

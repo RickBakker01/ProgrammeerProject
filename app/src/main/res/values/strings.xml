@@ -8,8 +8,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Log in</string>
-    <string name="or">Or</string>
-    <string name="register">Register</string>
+
+    <string name="register">Need an account? Click to register</string>
     <string name="sign_in_failed">Failed to sign in, please try again</string>
     <string name="sign_in_successful">Successfully signed in</string>
     <string name="empty">Please fill in your email and password</string>

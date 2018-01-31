@@ -12,12 +12,13 @@
               tools:context="com.example.rick.programmeerproject.LogInActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/logo"
         android:maxHeight="100dp"
         android:maxWidth="100dp"
         android:scaleType="fitCenter"
@@ -49,7 +50,6 @@
         android:layout_marginTop="7dp"
         android:hint="@string/password">
 
-
         <EditText
             android:id="@+id/user_password"
             android:layout_width="match_parent"
@@ -60,16 +60,15 @@
             android:textColor="#000000"/>
     </android.support.design.widget.TextInputLayout>
 
-
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:textColor="#000000"
         android:backgroundTint="@color/button"
-        android:text="@string/login"/>
+        android:text="@string/login"
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/gotoregister"

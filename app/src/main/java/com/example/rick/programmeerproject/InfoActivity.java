@@ -53,7 +53,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     float numStars;
     CheckBox checkBox;
     EditText brewComment;
-    ImageView imageView;
+    ImageView brewPic;
     Integer uRating;
     Integer uVisit;
     String uComment;
@@ -98,7 +98,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         street = findViewById(R.id.street);
         city = findViewById(R.id.city);
         phone = findViewById(R.id.phone);
-        imageView = findViewById(R.id.imageView);
+        brewPic = findViewById(R.id.brewPic);
 
         ratingBar = findViewById(R.id.ratingBar);
         ratingBar.setOnRatingBarChangeListener(this);
@@ -176,10 +176,10 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
 
     public void setImage() {
         if (!Objects.equals(sImageUrl, "null")) {
-            Picasso.with(this).load(sImageUrl).resize(750, 750).into(imageView);
+            Picasso.with(this).load(sImageUrl).resize(750, 750).into(brewPic);
             picture.setText("");
         } else {
-            Picasso.with(this).load(R.drawable.no_image).resize(750, 750).into(imageView);
+            Picasso.with(this).load(R.drawable.no_image).resize(750, 750).into(brewPic);
             picture.setText("Image designed by Freepik.com");
         }
         if (!Objects.equals(sCaption, "null")) {

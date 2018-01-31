@@ -9,18 +9,17 @@
               tools:context="com.example.rick.programmeerproject.RegisterActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:adjustViewBounds="true"
-        android:contentDescription="Logo"
+        android:contentDescription="@string/logo"
         android:maxHeight="100dp"
         android:maxWidth="100dp"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo"/>
-
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_layout"
@@ -28,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:hint="@string/emailRegister"
+        android:hint="@string/email"
         android:labelFor="@+id/email">
 
         <EditText
@@ -41,14 +40,13 @@
             android:textColor="#000000"/>
     </android.support.design.widget.TextInputLayout>
 
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_layout2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="7dp"
-        android:hint="@string/passwordRegister"
+        android:hint="@string/password"
         android:labelFor="@+id/password">
 
         <EditText
@@ -69,7 +67,6 @@
         android:layout_marginTop="7dp"
         android:hint="@string/confirm_passwordRegister"
         android:labelFor="@+id/password_confirm">
-
 
         <EditText
             android:id="@+id/password_confirm"

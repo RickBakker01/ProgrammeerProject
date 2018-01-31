@@ -15,12 +15,13 @@
         tools:context="com.example.rick.programmeerproject.SplashActivity">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/logo"
             android:maxHeight="150dp"
             android:maxWidth="150dp"
             android:scaleType="fitCenter"
@@ -33,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="35dp"
             android:fontFamily="sans-serif-light"
-            android:text="Van de kaart"
+            android:text="@string/title"
             android:textSize="35sp"/>
     </LinearLayout>
 
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
-        android:text="Image designed by Freepik.com"
+        android:text="@string/freepik"
         android:textSize="12sp"/>
+
 </RelativeLayout>

@@ -15,16 +15,16 @@
         android:orientation="vertical"
         tools:context="com.example.rick.programmeerproject.SearchActivity">
 
-
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:maxWidth="100dp"
-            android:maxHeight="100dp"
-            android:scaleType="fitCenter"
             android:layout_marginTop="25dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/logo"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/logo"/>
 
         <android.support.design.widget.TextInputLayout
@@ -32,16 +32,17 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:hint="City"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:hint="@string/city"
+            android:labelFor="@+id/searchText">
 
             <EditText
                 android:id="@+id/searchText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FFFFFF"
-                android:textColor="#000000"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:textColor="#000000"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -51,9 +52,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/button"
-            android:text="Search"
+            android:text="@string/search"
             android:textColor="#000000"/>
-
 
     </LinearLayout>
 
@@ -63,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
-        android:text="Image designed by Freepik.com"
+        android:text="@string/freepik"
         android:textSize="12sp"/>
+
 </RelativeLayout>

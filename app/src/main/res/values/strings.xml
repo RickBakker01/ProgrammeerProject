@@ -1,22 +1,20 @@
 <resources>
+    <!-- App strings -->
     <string name="app_name">Van de kaart</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="please_login">Please log in</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="login">Log in</string>
 
-    <string name="register">Need an account? Click to register</string>
+    <!-- App strings -->
+    <string name="please_login">Please log in</string>
+
+
     <string name="sign_in_failed">Failed to sign in, please try again</string>
     <string name="sign_in_successful">Successfully signed in</string>
     <string name="empty">Please fill in your email and password</string>
-    <string name="emailRegister">Email</string>
-    <string name="passwordRegister">Password</string>
+
     <string name="confirm_passwordRegister">Confirm password</string>
-    <string name="registerRegister">Register</string>
     <string name="registerHeader">Please fill in below and click on register to register your account</string>
     <string name="registration_successful">Registration successful. Account created</string>
     <string name="to_short">Your password must be longer than 6 characters</string>
@@ -25,4 +23,35 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- activity_info strings -->
+    <string name="brewery_picture">Brewery picture</string>
+    <string name="visited">Visited</string>
+    <string name="my_comment">My comment about the brewery</string>
+    <string name="save">Save</string>
+
+    <!-- activity_log strings -->
+    <string name="login">Log in</string>
+    <string name="register">Need an account? Click to register</string>
+
+    <!-- multiple use strings -->
+    <string name="logo">Logo</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="freepik">Image designed by Freepik.com</string>
+
+    <!-- activity_my_acc strings -->
+    <string name="visited_breweries">Here are your visited breweries. Click to go to one and hold to remove.</string>
+
+    <!-- activity_register strings -->
+    <string name="registerRegister">Register</string>
+
+    <!-- activity_search strings -->
+    <string name="city">City</string>
+    <string name="search">Search</string>
+
+    <!-- activity_splash strings -->
+    <string name="title">Van de kaart</string>
+
+
 </resources>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 public class MyAccActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -31,17 +33,19 @@ public class MyAccActivity extends AppCompatActivity {
     ListView lv;
     String selectedBrewery;
     String uID;
-    ArrayAdapter<String> arrayAdapter;
+    TextView info;
+    ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_acc);
-        findViewById(R.id.sign_out).setOnClickListener(new myListener());
         lv = findViewById(R.id.breweryList);
+        info = findViewById(R.id.info);
         lv.setOnItemClickListener(new LVListener());
         lv.setOnItemLongClickListener(new LVLongListener());
         collect();
+        getCurrentUser();
     }
 
     @Override
@@ -64,6 +68,14 @@ public class MyAccActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
         startActivity(new Intent(MyAccActivity.this, MainActivity.class));
+    }
+
+    public void getCurrentUser() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String email = user.getEmail();
+            info.setText("Hello, " + email + ".");
+        }
     }
 
     public void collect() {
@@ -112,8 +124,7 @@ public class MyAccActivity extends AppCompatActivity {
     }
 
     public void populate() {
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, brewList);
-        Log.d("listview", String.valueOf(brewList));
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.custom_list, brewList);
         lv.setAdapter(arrayAdapter);
     }
 
@@ -144,19 +155,6 @@ public class MyAccActivity extends AppCompatActivity {
             AlertDialog alert1 = builder.create();
             alert1.show();
             return true;
-        }
-    }
-
-    public class myListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.sign_out:
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(MyAccActivity.this, MainActivity.class));
-                    finish();
-                    break;
-            }
         }
     }
 }

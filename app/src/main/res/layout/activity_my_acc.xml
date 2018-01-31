@@ -4,28 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context="com.example.rick.programmeerproject.MyAccActivity">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="Info about you"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:text=""
+        android:textSize="20sp"/>
 
+    <TextView
+        android:id="@+id/info2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:text="Here are your visited breweries. Click to go to one and hold to remove."/>
 
     <ListView
         android:id="@+id/breweryList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Sign out"/>
-
+        />
 </LinearLayout>

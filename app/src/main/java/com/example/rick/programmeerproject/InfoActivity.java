@@ -134,6 +134,11 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void onBackPressed(){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (Objects.equals(String.valueOf(item), "Account")) {
@@ -214,11 +219,8 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
                     assert user != null;
                     sId = user.getID();
                     uRating = user.getRating();
-
                     uVisit = user.getVisit();
-
                     uComment = user.getComment();
-
                     ratingBar.setRating(uRating);
                     if (uVisit == 1) {
                         checkBox.setChecked(true);

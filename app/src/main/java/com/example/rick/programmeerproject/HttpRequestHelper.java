@@ -12,7 +12,7 @@ class HttpRequestHelper {
     static synchronized String downloadFromServer(String... params) throws MalformedURLException {
         StringBuilder result = new StringBuilder();
         String city = params[0];
-        URL url = new URL("http://beermapping" + "" + "" +
+        URL url = new URL("http://beermapping" + "" + "" + "" + "" + "" +
                 ".com/webservice/loccity/ebd4907cef61e7544b290b02c3b0d28b/" + city + "&s=json");
         HttpURLConnection connect;
         try {
@@ -36,7 +36,7 @@ class HttpRequestHelper {
     static synchronized String downloadFromServer2(String... params) throws MalformedURLException {
         String result2 = "";
         String id = params[0];
-        URL url = new URL("http://beermapping" + "" + "" +
+        URL url = new URL("http://beermapping" +
                 ".com/webservice/locmap/ebd4907cef61e7544b290b02c3b0d28b/" + id + "&s=json");
         HttpURLConnection connect;
         try {
@@ -60,7 +60,7 @@ class HttpRequestHelper {
     static synchronized String downloadFromServer3(String... params) throws MalformedURLException {
         String result3 = "";
         String id = params[0];
-        URL url = new URL("http://beermapping" + "" + "" +
+        URL url = new URL("http://beermapping" + "" + "" + "" + "" + "" +
                 ".com/webservice/locquery/ebd4907cef61e7544b290b02c3b0d28b/" + id + "&s=json");
         HttpURLConnection connect;
         try {
@@ -84,7 +84,7 @@ class HttpRequestHelper {
     static synchronized String downloadFromServer4(String... params) throws MalformedURLException {
         String result4 = "";
         String id = params[0];
-        URL url = new URL("http://beermapping" + "" + "" +
+        URL url = new URL("http://beermapping" + "" + "" + "" + "" + "" +
                 ".com/webservice/locimage/ebd4907cef61e7544b290b02c3b0d28b/" + id + "&s=json");
         HttpURLConnection connect;
         try {

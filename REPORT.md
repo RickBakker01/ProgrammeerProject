@@ -5,6 +5,8 @@ This is an app that gives you a map with breweries nearby, or the breweries in a
 
 ### Screenshot:
 
+![](doc/main_screen.png)
+
 
 ## Technical design
 #### High level overview
@@ -17,6 +19,9 @@ When the user is in the main activity and the user clicks on a marker on the map
 brewery. Here, a user sees some extra information about the brewery, including an image when it is available. When it s not, a standard image is shown. 
 On the info page, a user can set the brewery as visited and leave a small rating. This is saved when the user is signed in. When the user gets back to this brewery,
 the app shows the previously saved rating. 
+
+When the user clicks on a marker, two buttons show up. One button opens the location in Google Maps, the other button opens the location with Google Maps Navigation.
+This is standard with the Google Maps API.
 
 When a user clicks on the account button, the app takes the user to the login screen or to the user info page, depending on whether the user is signed in.
 If the user is signed in, his or her email is shown, plus the visited breweries. When a user clicks on a visited brewery, the user is taken to the info page and the

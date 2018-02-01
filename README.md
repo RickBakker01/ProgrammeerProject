@@ -10,6 +10,7 @@ Saving the rating requires an account, which can be made in the app. The rating 
 ## Sources of external images
 The apps logo and standard brewery image are designed by Freepik. 
 For further terms of use see [Freepik terms of use](https://www.freepik.com/terms_of_use).
+All the content is located in drawable folder and in the mipmap folders.
 
 
 Copyright © 2018, [Rick Bakker](https://github.com/rickbakker01).

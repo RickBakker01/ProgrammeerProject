@@ -54,6 +54,7 @@
 
     <!-- mainactivity strings -->
     <string name="location">Please turn on location services</string>
+    <string name="no_breweries">No breweries found in your locality</string>
 
     <!-- myaccactivity strings -->
     <string name="signed_out">Successfully signed out</string>

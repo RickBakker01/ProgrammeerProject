@@ -13,14 +13,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+/**
+ * With this activity the user can login or go to the registration activity
+ */
 public class LogInActivity extends AppCompatActivity {
-    //Buttons and EditTexts are being called.
-    TextView gotoregister;
     Button login;
+    Bundle bundle;
     EditText mEmail;
     EditText mPassword;
-    Bundle bundle;
-    //Standard Firebase code.
+    TextView gotoregister;
     private FirebaseAuth mAuth;
 
     @Override
@@ -48,9 +49,6 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                //If sign in fails, display a message to the user. If sign in succeeds
-                // the auth state listener will be notified and logic to handle the
-                // signed in user can be handled in the listener.
                 if (!task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), R.string.sign_in_failed, Toast
                             .LENGTH_SHORT).show();
@@ -82,11 +80,9 @@ public class LogInActivity extends AppCompatActivity {
     public void login() {
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
-        //If email or password is empty, show a warning
         if (email.matches("") || password.matches("")) {
             Toast.makeText(getApplicationContext(), R.string.empty, Toast.LENGTH_SHORT).show();
         } else {
-            //When everything is fine, sign in.
             signIn(email, password);
         }
     }

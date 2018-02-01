@@ -31,7 +31,6 @@ import java.util.Objects;
  * This activity displays the info about the selected brewery
  */
 public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
-    private FirebaseAuth mAuth;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public Context context;
     float numStars;
@@ -63,7 +62,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     TextView street;
     TextView city;
     TextView phone;
-
+    private FirebaseAuth mAuth;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -108,7 +107,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         user();
     }
 
-    public void user(){
+    public void user() {
         mAuth = FirebaseAuth.getInstance();
         if (user != null) {
             uid = user.getUid();
@@ -121,7 +120,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         }
     }
 
-    public void initialize(){
+    public void initialize() {
         picture = findViewById(R.id.picture);
         caption = findViewById(R.id.caption);
         name = findViewById(R.id.name);

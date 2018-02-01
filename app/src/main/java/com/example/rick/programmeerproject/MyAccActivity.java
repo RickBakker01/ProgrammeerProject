@@ -22,17 +22,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+/**
+ * This activity shows the users email and the breweries that he or she visited
+ */
 public class MyAccActivity extends AppCompatActivity {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
-    DatabaseReference ref = database.getReference(uid);
     ArrayList<String> brewList = new ArrayList<>();
+    ArrayAdapter arrayAdapter;
     ListView lv;
+    String uid = user.getUid();
     String selectedBrewery;
     String uID;
     TextView info;
-    ArrayAdapter arrayAdapter;
+    DatabaseReference ref = database.getReference(uid);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +110,7 @@ public class MyAccActivity extends AppCompatActivity {
                 User user = users.getValue(User.class);
                 if (user != null) {
                     uID = user.getID();
-                    Intent intent = new Intent(MyAccActivity.this, InfoActivity.class);
-                    intent.putExtra("name", selectedBrewery);
-                    intent.putExtra("id", uID);
-                    startActivity(intent);
-                    finish();
+                    newActivity();
                 }
             }
 
@@ -121,6 +120,14 @@ public class MyAccActivity extends AppCompatActivity {
             }
         };
         ref.addListenerForSingleValueEvent(postListener);
+    }
+
+    public void newActivity(){
+        Intent intent = new Intent(MyAccActivity.this, InfoActivity.class);
+        intent.putExtra("name", selectedBrewery);
+        intent.putExtra("id", uID);
+        startActivity(intent);
+        finish();
     }
 
     public void populate() {
@@ -141,9 +148,7 @@ public class MyAccActivity extends AppCompatActivity {
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MyAccActivity.this, R.style
                     .AlertDialogTheme);
-            builder.setMessage(R.string.message);
-            builder.setCancelable(true);
-
+            builder.setMessage(R.string.message).setCancelable(true);
             builder.setPositiveButton(R.string.positive, new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {

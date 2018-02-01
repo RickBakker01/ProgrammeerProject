@@ -41,6 +41,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+/**
+ * This activity shows the map and the markers where the breweries are
+ */
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap
         .OnInfoWindowClickListener {
     private static final int DEFAULT_ZOOM = 14;
@@ -50,24 +53,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_LOCATION = "location";
     public String name = "";
     int onsaved = 0;
-    String locality;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> lat = new ArrayList<>();
+    ArrayList<String> lon = new ArrayList<>();
+    ArrayList<String> id = new ArrayList<>();
     Integer locFound = 0;
     Integer fromSearch = 1;
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     Location mLastKnownLocation;
-    ArrayList<String> names = new ArrayList<>();
-    ArrayList<String> lat = new ArrayList<>();
-    ArrayList<String> lon = new ArrayList<>();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String locality;
     private FirebaseAuth mAuth;
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private boolean mLocationPermissionGranted;
-    //    private ArrayList<String> status = new ArrayList<>();
-    private ArrayList<String> id = new ArrayList<>();
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -76,14 +78,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             lon.add(intent.getStringExtra("lon"));
             lat.add(intent.getStringExtra("lat"));
             id.add(intent.getStringExtra("id"));
+            //This makes sure the toast is only shown once
             if (names.contains("No Location Found")) {
                 locFound += 1;
             }
             if (locFound == 1) {
-                Toast.makeText(context, "No breweries found in your locality", Toast.LENGTH_LONG)
-                        .show();
+                Toast.makeText(context, R.string.no_breweries, Toast.LENGTH_LONG).show();
             }
             if (fromSearch == 0 && !Objects.equals(lat.get(0), "null")) {
+                //Move camera to the first found brewery
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf
                         (String.valueOf(lat.get(0))), Double.valueOf(String.valueOf(lon.get(0))))
                         , 12));
@@ -158,8 +161,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
 
         // Prompt the user for permission.

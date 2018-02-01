@@ -27,10 +27,35 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
+/**
+ * This activity displays the info about the selected brewery
+ */
 public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
+    private FirebaseAuth mAuth;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public Context context;
+    float numStars;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Button save;
+    CheckBox checkBox;
+    DatabaseReference ref;
+    EditText brewComment;
+    ImageView brewPic;
+    Integer visits;
+    Integer uRating;
+    Integer uVisit;
+    RatingBar ratingBar;
+    String sCity;
+    String sPhone;
+    String sImageUrl;
+    String comment;
+    String sId;
+    String sCaption;
+    String sName;
+    String sStatus;
+    String sStreet;
+    String uComment;
+    String uid;
     TextView picture;
     TextView caption;
     TextView name;
@@ -38,29 +63,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     TextView street;
     TextView city;
     TextView phone;
-    public String sId;
-    public String sCaption;
-    public String sName;
-    public String sStatus;
-   public String sStreet;
-   public String sCity;
-   public String sPhone;
-   public String sImageUrl;
-   public String comment;
-   public RatingBar ratingBar;
-    public Integer visits;
 
-    float numStars;
-    CheckBox checkBox;
-    EditText brewComment;
-    ImageView brewPic;
-    Integer uRating;
-    Integer uVisit;
-    String uComment;
-    String uid;
-   public  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference ref;
-    private FirebaseAuth mAuth;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
@@ -90,32 +93,23 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
                 ("info"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver2, new IntentFilter
                 ("image"));
-        picture = findViewById(R.id.picture);
-        caption = findViewById(R.id.caption);
-        name = findViewById(R.id.name);
-        status = findViewById(R.id.status);
-        street = findViewById(R.id.street);
-        city = findViewById(R.id.city);
-        phone = findViewById(R.id.phone);
-        brewPic = findViewById(R.id.brewPic);
 
-        ratingBar = findViewById(R.id.ratingBar);
+        initialize();
+
         ratingBar.setOnRatingBarChangeListener(this);
-
-        save = findViewById(R.id.save);
         save.setOnClickListener(new InfoActivity.myListener());
-
-        checkBox = findViewById(R.id.checkBox);
-
-        brewComment = findViewById(R.id.brewComment);
 
         Intent intent = getIntent();
         sName = intent.getStringExtra("name");
         sId = intent.getStringExtra("id");
+
         getInfo();
         getImage();
-        mAuth = FirebaseAuth.getInstance();
+        user();
+    }
 
+    public void user(){
+        mAuth = FirebaseAuth.getInstance();
         if (user != null) {
             uid = user.getUid();
             user = FirebaseAuth.getInstance().getCurrentUser();
@@ -125,6 +119,21 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         } else {
             save.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void initialize(){
+        picture = findViewById(R.id.picture);
+        caption = findViewById(R.id.caption);
+        name = findViewById(R.id.name);
+        status = findViewById(R.id.status);
+        street = findViewById(R.id.street);
+        city = findViewById(R.id.city);
+        phone = findViewById(R.id.phone);
+        brewPic = findViewById(R.id.brewPic);
+        ratingBar = findViewById(R.id.ratingBar);
+        save = findViewById(R.id.save);
+        checkBox = findViewById(R.id.checkBox);
+        brewComment = findViewById(R.id.brewComment);
     }
 
     @Override
@@ -177,7 +186,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
             picture.setText("");
         } else {
             Picasso.with(this).load(R.drawable.no_image).resize(750, 750).into(brewPic);
-            picture.setText("Image designed by Freepik.com");
+            picture.setText(R.string.freepik);
         }
         if (!Objects.equals(sCaption, "null")) {
             caption.setText(sCaption);

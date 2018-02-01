@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         register = findViewById(R.id.register);
         register.setOnClickListener(new MyListener());
-
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mPasswordConfirm = findViewById(R.id.password_confirm);
@@ -55,7 +54,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 } else {
-
                     finish();
                     Toast.makeText(getApplicationContext(), R.string.registration_successful,
                             Toast.LENGTH_SHORT).show();

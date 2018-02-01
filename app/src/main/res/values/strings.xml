@@ -1,10 +1,6 @@
 <resources>
     <!-- App strings -->
     <string name="app_name">Van de kaart</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <!-- activity_info strings -->
     <string name="brewery_picture">Brewery picture</string>

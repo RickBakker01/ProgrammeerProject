@@ -153,7 +153,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         return true;
     }
 
-    public void userRedirect() {
+    private void userRedirect() {
         if (user == null) {
             Intent intent = new Intent(InfoActivity.this, LogInActivity.class);
             Bundle bundle = new Bundle();

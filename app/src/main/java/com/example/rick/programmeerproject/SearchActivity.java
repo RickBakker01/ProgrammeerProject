@@ -27,6 +27,7 @@ public class SearchActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("city", city);
+                    //If fromSearch equals 0, camera will be moved. It is only once 0.
                     bundle.putInt("fromSearch", 0);
                     intent.putExtras(bundle);
                     Toast.makeText(getApplicationContext(), R.string.searching, Toast.LENGTH_SHORT).show();

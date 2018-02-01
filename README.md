@@ -1,4 +1,4 @@
-# ProgrammeerProject
+# Van de kaart
 
 ## The problem
 This app will solve a 'problem' that some hipsters might have. Where is the nearest brewery in town and how do I get there? 

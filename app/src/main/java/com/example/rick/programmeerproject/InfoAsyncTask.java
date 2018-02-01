@@ -1,4 +1,5 @@
 package com.example.rick.programmeerproject;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,8 +14,9 @@ import java.net.MalformedURLException;
 /**
  * This is the async task that gets the info from a brewery id
  */
-public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
-    private Context context;
+class InfoAsyncTask extends AsyncTask<String, Integer, String> {
+    @SuppressLint("StaticFieldLeak")
+    private final Context context;
 
     InfoAsyncTask(InfoActivity info) {
         this.context = info.getApplicationContext();

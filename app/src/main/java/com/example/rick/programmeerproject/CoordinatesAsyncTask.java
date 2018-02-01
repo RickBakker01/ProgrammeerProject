@@ -1,4 +1,5 @@
 package com.example.rick.programmeerproject;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,9 +15,10 @@ import java.util.Objects;
 /**
  * This async task gets the coordinates from the result of the city async task
  */
-public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
-    String id;
-    private Context context;
+class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
+    private String id;
+    @SuppressLint("StaticFieldLeak")
+    private final Context context;
 
     CoordinatesAsyncTask(CityAsyncTask resultString) {
         this.context = resultString.getApplicationContext();

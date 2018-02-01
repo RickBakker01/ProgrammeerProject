@@ -1,4 +1,5 @@
 package com.example.rick.programmeerproject;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -10,8 +11,9 @@ import java.net.MalformedURLException;
 /**
  * This is the async task that retrieves the city the user is in.
  */
-public class CityAsyncTask extends AsyncTask<String, Integer, String> {
-    private Context context;
+class CityAsyncTask extends AsyncTask<String, Integer, String> {
+    @SuppressLint("StaticFieldLeak")
+    private final Context context;
 
     CityAsyncTask(MainActivity locality) {
         this.context = locality.getApplicationContext();

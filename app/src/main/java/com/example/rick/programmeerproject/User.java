@@ -1,6 +1,6 @@
 package com.example.rick.programmeerproject;
 /**
- * Created by Rick on 24-1-2018.
+ * This is a singleton for getting info from database
  */
 @SuppressWarnings("WeakerAccess")
 public class User {

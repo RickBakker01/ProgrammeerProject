@@ -26,16 +26,16 @@ import java.util.ArrayList;
  * This activity shows the users email and the breweries that he or she visited
  */
 public class MyAccActivity extends AppCompatActivity {
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    ArrayList<String> brewList = new ArrayList<>();
-    ArrayAdapter arrayAdapter;
-    ListView lv;
-    String uid = user.getUid();
-    String selectedBrewery;
-    String uID;
-    TextView info;
-    DatabaseReference ref = database.getReference(uid);
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private final ArrayList<String> brewList = new ArrayList<>();
+    private ArrayAdapter arrayAdapter;
+    private ListView lv;
+    private final String uid = user.getUid();
+    private String selectedBrewery;
+    private String uID;
+    private TextView info;
+    private final DatabaseReference ref = database.getReference(uid);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class MyAccActivity extends AppCompatActivity {
         startActivity(new Intent(MyAccActivity.this, MainActivity.class));
     }
 
-    public void getCurrentUser() {
+    private void getCurrentUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email = user.getEmail();
@@ -81,7 +81,7 @@ public class MyAccActivity extends AppCompatActivity {
         }
     }
 
-    public void collect() {
+    private void collect() {
         ValueEventListener postListener = new ValueEventListener() {
 
             @Override
@@ -101,7 +101,7 @@ public class MyAccActivity extends AppCompatActivity {
         ref.addValueEventListener(postListener);
     }
 
-    public void collectID() {
+    private void collectID() {
         ValueEventListener postListener = new ValueEventListener() {
 
             @Override
@@ -122,7 +122,7 @@ public class MyAccActivity extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(postListener);
     }
 
-    public void newActivity(){
+    private void newActivity(){
         Intent intent = new Intent(MyAccActivity.this, InfoActivity.class);
         intent.putExtra("name", selectedBrewery);
         intent.putExtra("id", uID);
@@ -130,7 +130,7 @@ public class MyAccActivity extends AppCompatActivity {
         finish();
     }
 
-    public void populate() {
+    private void populate() {
         arrayAdapter = new ArrayAdapter<>(this, R.layout.custom_list, brewList);
         lv.setAdapter(arrayAdapter);
     }

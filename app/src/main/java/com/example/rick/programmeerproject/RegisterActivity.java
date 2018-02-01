@@ -15,10 +15,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
-    Button register;
-    EditText mEmail;
-    EditText mPassword;
-    EditText mPasswordConfirm;
+    private EditText mEmail;
+    private EditText mPassword;
+    private EditText mPasswordConfirm;
     private FirebaseAuth mAuth;
 
     @Override
@@ -26,7 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        register = findViewById(R.id.register);
+        Button register = findViewById(R.id.register);
         register.setOnClickListener(new MyListener());
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
@@ -35,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void createAccount(String email, String password) {
+    private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new
                 OnCompleteListener<AuthResult>() {
 

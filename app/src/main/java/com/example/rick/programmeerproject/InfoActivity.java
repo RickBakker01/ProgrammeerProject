@@ -33,37 +33,44 @@ import java.util.Objects;
 public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     public Context context;
-    float numStars;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    Button save;
-    CheckBox checkBox;
-    DatabaseReference ref;
-    EditText brewComment;
-    ImageView brewPic;
-    Integer visits;
-    Integer uRating;
-    Integer uVisit;
-    RatingBar ratingBar;
-    String sCity;
-    String sPhone;
-    String sImageUrl;
-    String comment;
-    String sId;
-    String sCaption;
-    String sName;
-    String sStatus;
-    String sStreet;
-    String uComment;
-    String uid;
-    TextView picture;
-    TextView caption;
-    TextView name;
-    TextView status;
-    TextView street;
-    TextView city;
-    TextView phone;
-    private FirebaseAuth mAuth;
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private float numStars;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private Button save;
+    private CheckBox checkBox;
+    private DatabaseReference ref;
+    private EditText brewComment;
+    private ImageView brewPic;
+    private Integer visits;
+    private Integer uRating;
+    private Integer uVisit;
+    private RatingBar ratingBar;
+    private String sCity;
+    private String sPhone;
+    private String sImageUrl;
+    private String comment;
+    private String sId;
+    private String sCaption;
+    private String sName;
+    private String sStatus;
+    private String sStreet;
+    private String uComment;
+    private TextView picture;
+    private TextView caption;
+    private final BroadcastReceiver mReceiver2 = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sImageUrl = intent.getStringExtra("imageurl");
+            sCaption = intent.getStringExtra("caption");
+            setImage();
+        }
+    };
+    private TextView name;
+    private TextView status;
+    private TextView street;
+    private TextView city;
+    private TextView phone;
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -72,15 +79,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
             sCity = intent.getStringExtra("city");
             sPhone = intent.getStringExtra("phone");
             setInfo();
-        }
-    };
-    private BroadcastReceiver mReceiver2 = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            sImageUrl = intent.getStringExtra("imageurl");
-            sCaption = intent.getStringExtra("caption");
-            setImage();
         }
     };
 
@@ -107,10 +105,10 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         user();
     }
 
-    public void user() {
-        mAuth = FirebaseAuth.getInstance();
+    private void user() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if (user != null) {
-            uid = user.getUid();
+            String uid = user.getUid();
             user = FirebaseAuth.getInstance().getCurrentUser();
             ref = database.getReference(uid);
             save.setVisibility(View.VISIBLE);
@@ -120,7 +118,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         }
     }
 
-    public void initialize() {
+    private void initialize() {
         picture = findViewById(R.id.picture);
         caption = findViewById(R.id.caption);
         name = findViewById(R.id.name);
@@ -161,17 +159,17 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         return true;
     }
 
-    public void getInfo() {
+    private void getInfo() {
         InfoAsyncTask asyncTask = new InfoAsyncTask(this);
         asyncTask.execute(sId);
     }
 
-    public void getImage() {
+    private void getImage() {
         ImageAsyncTask ImageAsyncTask = new ImageAsyncTask(this);
         ImageAsyncTask.execute(sId);
     }
 
-    public void setInfo() {
+    private void setInfo() {
         name.setText(sName);
         status.setText(sStatus);
         street.setText(sStreet);
@@ -179,7 +177,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         phone.setText(sPhone);
     }
 
-    public void setImage() {
+    private void setImage() {
         if (!Objects.equals(sImageUrl, "null")) {
             Picasso.with(this).load(sImageUrl).resize(750, 750).into(brewPic);
             picture.setText("");
@@ -199,7 +197,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         }
     }
 
-    public void ratingToDB() {
+    private void ratingToDB() {
         if (visits == 0 && numStars == 0 && Objects.equals(comment, "")) {
             Toast.makeText(this, R.string.rate, Toast.LENGTH_SHORT).show();
         } else {
@@ -209,7 +207,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         }
     }
 
-    public void collect() {
+    private void collect() {
         // Attach a listener to read the data
         ValueEventListener postListener = new ValueEventListener() {
 

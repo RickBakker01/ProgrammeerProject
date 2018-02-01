@@ -17,21 +17,19 @@ import com.google.firebase.auth.FirebaseAuth;
  * With this activity the user can login or go to the registration activity
  */
 public class LogInActivity extends AppCompatActivity {
-    Button login;
-    Bundle bundle;
-    EditText mEmail;
-    EditText mPassword;
-    TextView gotoregister;
+    private Bundle bundle;
+    private EditText mEmail;
+    private EditText mPassword;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        login = findViewById(R.id.login);
+        Button login = findViewById(R.id.login);
         login.setOnClickListener(new myListener());
 
-        gotoregister = findViewById(R.id.gotoregister);
+        TextView gotoregister = findViewById(R.id.gotoregister);
         gotoregister.setOnClickListener(new myListener());
 
         mEmail = findViewById(R.id.user_email);
@@ -42,7 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         bundle = intent.getExtras();
     }
 
-    public void signIn(String email, final String password) {
+    private void signIn(String email, final String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new
                 OnCompleteListener<AuthResult>() {
 
@@ -72,12 +70,12 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    public void register() {
+    private void register() {
         finish();
         startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
     }
 
-    public void login() {
+    private void login() {
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
         if (email.matches("") || password.matches("")) {

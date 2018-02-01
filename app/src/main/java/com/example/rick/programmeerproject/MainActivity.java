@@ -52,25 +52,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     public String name = "";
-    int onsaved = 0;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    ArrayList<String> names = new ArrayList<>();
-    ArrayList<String> lat = new ArrayList<>();
-    ArrayList<String> lon = new ArrayList<>();
-    ArrayList<String> id = new ArrayList<>();
-    Integer locFound = 0;
-    Integer fromSearch = 1;
+    private int onsaved = 0;
+    private final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> lat = new ArrayList<>();
+    private ArrayList<String> lon = new ArrayList<>();
+    private ArrayList<String> id = new ArrayList<>();
+    private Integer locFound = 0;
+    private Integer fromSearch = 1;
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    Location mLastKnownLocation;
-    String locality;
+    private Location mLastKnownLocation;
+    private String locality;
     private FirebaseAuth mAuth;
     private CameraPosition mCameraPosition;
     private GoogleMap mMap;
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private boolean mLocationPermissionGranted;
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     };
 
-    public void setMarker() {
+    private void setMarker() {
         mMap.setOnInfoWindowClickListener(this);
         if (!names.contains("No Location Found") || onsaved != 0) {
             if (!names.contains("No Location Found")) {
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setupNeeded();
     }
 
-    protected void setupNeeded() {
+    private void setupNeeded() {
         // Build the map.
         if (mMap == null) {
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void control() {
+    private void control() {
         LocationManager locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         assert locManager != null;
         if (locManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return true;
     }
 
-    public void getCity() {
+    private void getCity() {
         double lat;
         double lon;
         lat = mLastKnownLocation.getLatitude();
@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void citySearch() {
+    private void citySearch() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 

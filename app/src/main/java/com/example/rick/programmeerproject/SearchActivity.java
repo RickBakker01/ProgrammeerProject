@@ -7,16 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 public class SearchActivity extends AppCompatActivity {
-    EditText searchText;
-    Button search;
-    String city;
+    private EditText searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         searchText = findViewById(R.id.searchText);
-        search = findViewById(R.id.search);
+        Button search = findViewById(R.id.search);
         search.setOnClickListener(new SearchActivity.myListener());
     }
 
@@ -25,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.search:
-                    city = searchText.getText().toString();
+                    String city = searchText.getText().toString();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("city", city);

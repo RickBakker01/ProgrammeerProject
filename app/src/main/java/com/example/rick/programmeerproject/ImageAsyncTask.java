@@ -1,4 +1,5 @@
 package com.example.rick.programmeerproject;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,8 +13,9 @@ import java.net.MalformedURLException;
 /**
  * This is the async task that gets the image and caption from a brewery id
  */
-public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
-    private Context context;
+class ImageAsyncTask extends AsyncTask<String, Integer, String> {
+    @SuppressLint("StaticFieldLeak")
+    private final Context context;
 
     ImageAsyncTask(InfoActivity image) {
         this.context = image.getApplicationContext();

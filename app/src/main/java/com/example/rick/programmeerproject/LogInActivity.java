@@ -27,10 +27,10 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         Button login = findViewById(R.id.login);
-        login.setOnClickListener(new myListener());
+        login.setOnClickListener(new MyListener());
 
         TextView gotoregister = findViewById(R.id.gotoregister);
-        gotoregister.setOnClickListener(new myListener());
+        gotoregister.setOnClickListener(new MyListener());
 
         mEmail = findViewById(R.id.user_email);
         mPassword = findViewById(R.id.user_password);
@@ -72,7 +72,13 @@ public class LogInActivity extends AppCompatActivity {
 
     private void register() {
         finish();
-        startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+        if (bundle != null) {
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class).putExtras
+                    (bundle));
+        } else {
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+        }
+
     }
 
     private void login() {
@@ -85,7 +91,7 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-    private class myListener implements View.OnClickListener {
+    private class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {

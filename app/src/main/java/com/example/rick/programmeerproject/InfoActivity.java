@@ -65,6 +65,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
             setImage();
         }
     };
+    private TextView gotologin;
     private TextView name;
     private TextView status;
     private TextView street;
@@ -94,7 +95,8 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         initialize();
 
         ratingBar.setOnRatingBarChangeListener(this);
-        save.setOnClickListener(new InfoActivity.myListener());
+        save.setOnClickListener(new MyListener());
+        gotologin.setOnClickListener(new MyListener());
 
         Intent intent = getIntent();
         sName = intent.getStringExtra("name");
@@ -111,10 +113,10 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
             String uid = user.getUid();
             user = FirebaseAuth.getInstance().getCurrentUser();
             ref = database.getReference(uid);
-            save.setVisibility(View.VISIBLE);
+            gotologin.setVisibility(View.GONE);
             collect();
         } else {
-            save.setVisibility(View.INVISIBLE);
+            save.setVisibility(View.GONE);
         }
     }
 
@@ -131,6 +133,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         save = findViewById(R.id.save);
         checkBox = findViewById(R.id.checkBox);
         brewComment = findViewById(R.id.brewComment);
+        gotologin = findViewById(R.id.gotologin);
     }
 
     @Override
@@ -143,20 +146,24 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (Objects.equals(String.valueOf(item), "Account")) {
-            if (user == null) {
-                Intent intent = new Intent(InfoActivity.this, LogInActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", sName);
-                bundle.putString("uId", sId);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            } else {
-                startActivity(new Intent(this, MyAccActivity.class));
-            }
+            userRedirect();
         } else if (Objects.equals(String.valueOf(item), "Search")) {
             startActivity(new Intent(InfoActivity.this, SearchActivity.class));
         }
         return true;
+    }
+
+    public void userRedirect() {
+        if (user == null) {
+            Intent intent = new Intent(InfoActivity.this, LogInActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("name", sName);
+            bundle.putString("uId", sId);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else {
+            startActivity(new Intent(this, MyAccActivity.class));
+        }
     }
 
     private void getInfo() {
@@ -240,7 +247,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         ref.addValueEventListener(postListener);
     }
 
-    private class myListener implements View.OnClickListener {
+    private class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
@@ -253,6 +260,8 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
                     }
                     ratingToDB();
                     break;
+                case R.id.gotologin:
+                    userRedirect();
             }
         }
     }

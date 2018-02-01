@@ -39,6 +39,7 @@
     <!-- infoactivity strings -->
     <string name="rate">Please rate before you save</string>
     <string name="saved">Saved</string>
+    <string name="register_from_info">You can only save when you are logged in. Click to sign in</string>
 
     <!-- infoasynctask strings -->
     <string name="asking">Asking brewery for more information</string>

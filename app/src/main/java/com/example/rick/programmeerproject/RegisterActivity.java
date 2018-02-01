@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
+    private Bundle bundle;
     private EditText mEmail;
     private EditText mPassword;
     private EditText mPasswordConfirm;
@@ -32,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordConfirm = findViewById(R.id.password_confirm);
 
         mAuth = FirebaseAuth.getInstance();
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
     }
 
     private void createAccount(String email, String password) {
@@ -56,7 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
                     finish();
                     Toast.makeText(getApplicationContext(), R.string.registration_successful,
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    if (bundle == null) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        Intent intent2 = new Intent(getApplicationContext(), InfoActivity.class);
+                        intent2.putExtra("id", bundle.getString("uId"));
+                        intent2.putExtra("name", bundle.getString("name"));
+                        startActivity(intent2);
+                    }
                 }
             }
         });

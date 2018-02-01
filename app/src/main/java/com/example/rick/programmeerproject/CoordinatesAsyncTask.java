@@ -28,7 +28,7 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
             //Get the ID from the param. Arrays.toString() includes [ and ]. ReplaceAll with
             // regex to get rid of the brackets.
             id = (Arrays.toString(params).replaceAll("\\[|]|,|\\s", ""));
-            return HttpRequestHelper.downloadFromServer2(params);
+            return HttpRequestHelper.downloadFromServer("locmap", params);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -36,11 +36,11 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String result2) {
-        super.onPostExecute(result2);
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result2);
+            JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
                 if (!Objects.equals(breweries.getString("name"), "null")) {

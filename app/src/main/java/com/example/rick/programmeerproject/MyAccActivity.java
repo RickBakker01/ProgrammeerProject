@@ -138,7 +138,8 @@ public class MyAccActivity extends AppCompatActivity {
     private class LVLongListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MyAccActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MyAccActivity.this, R.style
+                    .AlertDialogTheme);
             builder.setMessage("Are you sure you want to remove this brewery?");
             builder.setCancelable(true);
 

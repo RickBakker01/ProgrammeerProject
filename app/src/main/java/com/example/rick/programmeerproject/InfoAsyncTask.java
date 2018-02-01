@@ -29,7 +29,7 @@ public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            return HttpRequestHelper.downloadFromServer3(params);
+            return HttpRequestHelper.downloadFromServer("locquery", params);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -37,12 +37,11 @@ public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String result3) {
-        super.onPostExecute(result3);
-        Log.d("testinfo", result3);
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result3);
+            JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
                 String status = breweries.getString("status");

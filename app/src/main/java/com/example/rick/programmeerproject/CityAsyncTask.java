@@ -21,7 +21,7 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            return HttpRequestHelper.downloadFromServer(params);
+            return HttpRequestHelper.downloadFromServer("loccity", params);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

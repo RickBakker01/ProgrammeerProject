@@ -134,10 +134,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void onBackPressed(){
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -21,4 +21,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/background</item>
+    </style>
+
 </resources>

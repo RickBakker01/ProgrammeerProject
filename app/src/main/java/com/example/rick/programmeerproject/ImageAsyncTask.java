@@ -22,7 +22,7 @@ public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            return HttpRequestHelper.downloadFromServer4(params);
+            return HttpRequestHelper.downloadFromServer("locimage", params);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -30,11 +30,11 @@ public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String result4) {
-        super.onPostExecute(result4);
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result4);
+            JSONArray Main = new JSONArray(result);
             for (int i = 0; i < Main.length(); i++) {
                 JSONObject breweries = Main.getJSONObject(i);
                 String imageurl = breweries.getString("imageurl");

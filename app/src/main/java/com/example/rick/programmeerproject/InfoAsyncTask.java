@@ -3,7 +3,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -12,7 +11,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 /**
- * Created by Rick on 23-1-2018.
+ * This is the async task that gets the info from a brewery id
  */
 public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;
@@ -23,7 +22,7 @@ public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        Toast.makeText(context, "Asking brewery for more information", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, R.string.asking, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -41,13 +40,14 @@ public class InfoAsyncTask extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result);
-            for (int i = 0; i < Main.length(); i++) {
-                JSONObject breweries = Main.getJSONObject(i);
+            JSONArray info_array = new JSONArray(result);
+            for (int i = 0; i < info_array.length(); i++) {
+                JSONObject breweries = info_array.getJSONObject(i);
                 String status = breweries.getString("status");
                 String street = breweries.getString("street");
                 String city = breweries.getString("city");
                 String phone = breweries.getString("phone");
+                //Use an intent with a broadcast manager to send the data back to InfoActivity
                 Intent intent = new Intent("info");
                 intent.putExtra("status", status);
                 intent.putExtra("street", street);

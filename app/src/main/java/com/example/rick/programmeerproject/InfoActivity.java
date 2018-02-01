@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,17 +38,18 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     TextView street;
     TextView city;
     TextView phone;
-    String sId;
-    String sCaption;
-    String sName;
-    String sStatus;
-    String sStreet;
-    String sCity;
-    String sPhone;
-    String sImageUrl;
-    String comment;
-    RatingBar ratingBar;
-    Integer visits;
+    public String sId;
+    public String sCaption;
+    public String sName;
+    public String sStatus;
+   public String sStreet;
+   public String sCity;
+   public String sPhone;
+   public String sImageUrl;
+   public String comment;
+   public RatingBar ratingBar;
+    public Integer visits;
+
     float numStars;
     CheckBox checkBox;
     EditText brewComment;
@@ -58,7 +58,7 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
     Integer uVisit;
     String uComment;
     String uid;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+   public  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference ref;
     private FirebaseAuth mAuth;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -134,7 +134,6 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (Objects.equals(String.valueOf(item), "Account")) {
@@ -194,11 +193,11 @@ public class InfoActivity extends AppCompatActivity implements RatingBar.OnRatin
 
     public void ratingToDB() {
         if (visits == 0 && numStars == 0 && Objects.equals(comment, "")) {
-            Toast.makeText(this, "Please rate before you save", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.rate, Toast.LENGTH_SHORT).show();
         } else {
             User user = new User(sId, (int) numStars, visits, comment);
             ref.child(sName).setValue(user);
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
         }
     }
 

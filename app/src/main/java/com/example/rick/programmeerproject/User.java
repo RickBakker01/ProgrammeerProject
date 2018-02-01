@@ -2,11 +2,12 @@ package com.example.rick.programmeerproject;
 /**
  * Created by Rick on 24-1-2018.
  */
+@SuppressWarnings("WeakerAccess")
 public class User {
-    private String id;
-    private Integer rating;
-    private Integer visit;
-    private String comment;
+    public String id;
+    public Integer rating;
+    public Integer visit;
+    public String comment;
 
     public User() {
     }

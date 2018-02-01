@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getDeviceLocation();
         } else {
             //GPS disabled
-            Toast.makeText(this, "Please turn on location services", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.location, Toast.LENGTH_LONG).show();
         }
     }
 

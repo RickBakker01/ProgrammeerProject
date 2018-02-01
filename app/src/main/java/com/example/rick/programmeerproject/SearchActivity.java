@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
                     bundle.putString("city", city);
                     bundle.putInt("fromSearch", 0);
                     intent.putExtras(bundle);
-                    Toast.makeText(getApplicationContext(), "Searching", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.searching, Toast.LENGTH_SHORT).show();
                     startActivity(intent);
             }
         }

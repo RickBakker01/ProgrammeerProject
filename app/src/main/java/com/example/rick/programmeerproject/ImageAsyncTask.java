@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 /**
- * Created by Rick on 23-1-2018.
+ * This is the async task that gets the image and caption from a brewery id
  */
 public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;
@@ -34,11 +34,12 @@ public class ImageAsyncTask extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result);
-            for (int i = 0; i < Main.length(); i++) {
-                JSONObject breweries = Main.getJSONObject(i);
+            JSONArray image_array = new JSONArray(result);
+            for (int i = 0; i < image_array.length(); i++) {
+                JSONObject breweries = image_array.getJSONObject(i);
                 String imageurl = breweries.getString("imageurl");
                 String caption = breweries.getString("caption");
+                //Use an intent with a broadcast manager to send the data back to InfoActivity
                 Intent intent = new Intent("image");
                 intent.putExtra("imageurl", imageurl);
                 intent.putExtra("caption", caption);

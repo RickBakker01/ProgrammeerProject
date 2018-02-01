@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         register = findViewById(R.id.register);
-        register.setOnClickListener(new myListener());
+        register.setOnClickListener(new MyListener());
 
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
@@ -55,23 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    //                            //When everything is fine, create new intent
-                    // and get extras from the intent.
-                    //                            Intent intent = getIntent();
-                    //                            Bundle bundle = intent.getExtras();
-                    //                            if (bundle == null) {
-                    //                                //If the bundle is empty, user signed in
-                    // via AccountActivity.
-                    //                                finish();
-                    //                                Toast.makeText(getApplicationContext(), R
-                    // .string.registration_successful,
-                    //                                        Toast.LENGTH_SHORT).show();
-                    //                                startActivity(new Intent
-                    // (getApplicationContext(), MainActivity.class));
-                    //                            } else {
-                    //If the bundle is not empty, user registered from the moodlist
-                    // and must be redirected back to the personal moodlist after the user
-                    // registered.
+
                     finish();
                     Toast.makeText(getApplicationContext(), R.string.registration_successful,
                             Toast.LENGTH_SHORT).show();
@@ -89,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //A non-anonymous listener
-    class myListener implements View.OnClickListener {
+        class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             //Get the strings from the email and password EditTexts
@@ -115,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     //When password not long enough, show warning.
                     mPasswordConfirm.getText().clear();
-                    Toast.makeText(RegisterActivity.this, R.string.to_short, Toast.LENGTH_SHORT)
+                    Toast.makeText(RegisterActivity.this, R.string.too_short, Toast.LENGTH_SHORT)
                             .show();
                 }
             }

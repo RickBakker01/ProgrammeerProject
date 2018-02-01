@@ -8,8 +8,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 /**
- * Created by Rick on 17-1-2018.
- * test comment git
+ * This is the async task that retrieves the city the user is in.
  */
 public class CityAsyncTask extends AsyncTask<String, Integer, String> {
     private Context context;
@@ -33,12 +32,12 @@ public class CityAsyncTask extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result);
-            for (int i = 0; i < Main.length(); i++) {
-                JSONObject breweries = Main.getJSONObject(i);
-                String resultaat = breweries.getString("id");
+            JSONArray city_array = new JSONArray(result);
+            for (int i = 0; i < city_array.length(); i++) {
+                JSONObject breweries = city_array.getJSONObject(i);
+                String resultString = breweries.getString("id");
                 CoordinatesAsyncTask asyncTask = new CoordinatesAsyncTask(this);
-                asyncTask.execute(resultaat);
+                asyncTask.execute(resultString);
             }
         } catch (JSONException e) {
             e.printStackTrace();

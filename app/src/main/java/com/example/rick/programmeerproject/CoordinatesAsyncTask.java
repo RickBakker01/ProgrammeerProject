@@ -12,14 +12,14 @@ import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Objects;
 /**
- * Created by Rick on 18-1-2018.
+ * This async task gets the coordinates from the result of the city async task
  */
 public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
     String id;
     private Context context;
 
-    CoordinatesAsyncTask(CityAsyncTask resultaat) {
-        this.context = resultaat.getApplicationContext();
+    CoordinatesAsyncTask(CityAsyncTask resultString) {
+        this.context = resultString.getApplicationContext();
     }
 
     @Override
@@ -40,9 +40,9 @@ public class CoordinatesAsyncTask extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
         try {
             //Get the results
-            JSONArray Main = new JSONArray(result);
-            for (int i = 0; i < Main.length(); i++) {
-                JSONObject breweries = Main.getJSONObject(i);
+            JSONArray coordinates_array = new JSONArray(result);
+            for (int i = 0; i < coordinates_array.length(); i++) {
+                JSONObject breweries = coordinates_array.getJSONObject(i);
                 if (!Objects.equals(breweries.getString("name"), "null")) {
                     String names = breweries.getString("name").replaceAll("[.]", "");
                     String lat = breweries.getString("lat");

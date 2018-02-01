@@ -57,7 +57,7 @@ public class MyAccActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FirebaseAuth.getInstance().signOut();
-        Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show();
         startActivity(new Intent(MyAccActivity.this, MainActivity.class));
         finish();
         return true;
@@ -73,7 +73,8 @@ public class MyAccActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String email = user.getEmail();
-            info.setText("Hello, " + email + ".");
+            info.setText(String.format("%s %s%s", getString(R.string.hello), email, getString(R
+                    .string.dot)));
         }
     }
 
@@ -140,10 +141,10 @@ public class MyAccActivity extends AppCompatActivity {
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MyAccActivity.this, R.style
                     .AlertDialogTheme);
-            builder.setMessage("Are you sure you want to remove this brewery?");
+            builder.setMessage(R.string.message);
             builder.setCancelable(true);
 
-            builder.setPositiveButton("Remove item", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.positive, new DialogInterface.OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
                     ref.child(brewList.get(i)).removeValue();

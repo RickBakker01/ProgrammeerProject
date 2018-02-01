@@ -6,24 +6,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-    <!-- App strings -->
-    <string name="please_login">Please log in</string>
-
-
-    <string name="sign_in_failed">Failed to sign in, please try again</string>
-    <string name="sign_in_successful">Successfully signed in</string>
-    <string name="empty">Please fill in your email and password</string>
-
-    <string name="confirm_passwordRegister">Confirm password</string>
-    <string name="registerHeader">Please fill in below and click on register to register your account</string>
-    <string name="registration_successful">Registration successful. Account created</string>
-    <string name="to_short">Your password must be longer than 6 characters</string>
-    <string name="different_passwords">You have entered two different passwords. Try again</string>
-
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
     <!-- activity_info strings -->
     <string name="brewery_picture">Brewery picture</string>
     <string name="visited">Visited</string>
@@ -46,10 +28,10 @@
 
     <!-- activity_register strings -->
     <string name="registerRegister">Register</string>
+    <string name="confirm_passwordRegister">Confirm password</string>
 
     <!-- activity_search strings -->
     <string name="city">City</string>
-
 
     <!-- activity_splash strings -->
     <string name="title">Van de kaart</string>
@@ -58,5 +40,34 @@
     <string name="account">Account</string>
     <string name="sign_out">Sign out</string>
 
+    <!-- infoactivity strings -->
+    <string name="rate">Please rate before you save</string>
+    <string name="saved">Saved</string>
+
+    <!-- infoasynctask strings -->
+    <string name="asking">Asking brewery for more information</string>
+
+    <!-- loginactivity strings -->
+    <string name="sign_in_failed">Failed to sign in, please try again</string>
+    <string name="sign_in_successful">Successfully signed in</string>
+    <string name="empty">Please fill in your email and password</string>
+
+    <!-- mainactivity strings -->
+    <string name="location">Please turn on location services</string>
+
+    <!-- myaccactivity strings -->
+    <string name="signed_out">Successfully signed out</string>
+    <string name="hello">Hello,</string>
+    <string name="dot">.</string>
+    <string name="message">Are you sure you want to remove this brewery?</string>
+    <string name="positive">Remove item</string>
+
+    <!-- registeractivity strings -->
+    <string name="registration_successful">Registration successful. Account created</string>
+    <string name="different_passwords">You have entered two different passwords. Try again</string>
+    <string name="too_short">Your password must be longer than 6 characters</string>
+
+    <!-- searchactivity strings -->
+    <string name="searching">Searching</string>
 
 </resources>
